@@ -26,7 +26,8 @@
         "start": "nest start",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "eslint \"src/**/*.ts\" --fix",
-        "test": "NODE_ENV=test && jest --runInBand --passWithNoTests",
+        "test": "NODE_ENV=test && jest --passWithNoTests",
+        "post:test": "jest --clearCache",
         "before:commit": "pnpm run lint && pnpm run format && pnpm run test && pnpm run build"
     },
     "peerDependencies": {

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common'
 import { InjectConfig } from '../../config/config.provider'
 import { AWeberConfigDto } from '../../config/config.dto'
 import { AWeberOAuthInterface } from './auth.interface'
-import { OAUTH_CACHE_KEY } from './auth.constants'
+import { AWEBER_OAUTH_URL, AWEBER_TOKEN_URL, OAUTH_CACHE_KEY } from './auth.constants'
 import { LocalCacheService } from '../../config/cache/local.cache.service'
 
 interface TokenResponse {
@@ -16,8 +16,6 @@ interface TokenResponse {
 @Injectable()
 export class AuthService {
 	private readonly logger = new Logger(AuthService.name)
-	private readonly OAUTH_URL = 'https://auth.aweber.com/oauth2'
-	private readonly TOKEN_URL = 'https://auth.aweber.com/oauth2/token'
 
 	constructor(
 		@InjectConfig(AWeberConfigDto) private readonly config: AWeberConfigDto,
@@ -79,7 +77,7 @@ export class AuthService {
 			state: state || Date.now().toString(),
 		})
 
-		return `${this.OAUTH_URL}/authorize?${params.toString()}`
+		return `${AWEBER_OAUTH_URL}/authorize?${params.toString()}`
 	}
 
 	/**
@@ -118,7 +116,7 @@ export class AuthService {
 	private async requestAccessToken(params: Record<string, string>): Promise<TokenResponse> {
 		const credentials = Buffer.from(`${this.config.AWEBER_CLIENT_ID}:${this.config.AWEBER_CLIENT_SECRET}`).toString('base64')
 		
-		const response = await fetch(this.TOKEN_URL, {
+		const response = await fetch(AWEBER_TOKEN_URL, {
 			method: 'POST',
 			headers: {
 				'Authorization': `Basic ${credentials}`,
@@ -153,8 +151,7 @@ export class AuthService {
 		}
 
 		// Cache for the token lifetime
-		const ttl = tokenResponse.expires_in * 1000 // Convert to milliseconds
-		await this.localConfigService.write(OAUTH_CACHE_KEY, oauth, ttl)
+		await this.localConfigService.write(OAUTH_CACHE_KEY, oauth)
 		return oauth
 	}
 

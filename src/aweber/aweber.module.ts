@@ -6,6 +6,7 @@ import { WebhookController } from "./aweber.webhooks.controller";
 import { LocalCacheModule } from "../config/cache/local.cache.module";
 import { AWeberConfigDto } from "../config/config.dto";
 import { ConfigValidationModule } from "../config/config.module";
+import { AccountsModule } from "./accounts/accounts.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigValidationModule } from "../config/config.module";
     ConfigValidationModule.register(AWeberConfigDto),
     AuthModule,
     LocalCacheModule,
+    AccountsModule,
   ],
   controllers: [WebhookController],
   providers: [],

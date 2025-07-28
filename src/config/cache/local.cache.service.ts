@@ -56,15 +56,22 @@ export class LocalCacheService implements OnApplicationShutdown {
 	 * * otherwise will use in-memory cache
 	 */
 
-	public async write(key: string, value: any, ttl: number): Promise<void> {
+	public async write(key: string, value: any, ttl?: number): Promise<void> {
 	
 		if (this.useRedis()) {
 			if (this.redis.status !== 'ready') {
 				throw new Error('Redis client not ready')
 			}
 
-			this.logger.debug(`Cache write to Redis: ${key} with TTL: ${ttl}ms`)
-			await this.redis.set(key, JSON.stringify(value), 'PX', ttl)
+			if( !ttl || ttl <= 0) {
+				// If no TTL is provided, don't set a TTL
+				this.logger.debug(`Cache write to Redis: ${key} without TTL`)
+				await this.redis.set(key, JSON.stringify(value))
+			} else {
+				this.logger.debug(`Cache write to Redis: ${key} with TTL: ${ttl}ms`)
+				await this.redis.set(key, JSON.stringify(value), 'PX', ttl)
+			}
+			
 		} else {
 			this.logger.debug(`Cache write to in-memory: ${key} with TTL: ${ttl}ms`)
 			await this.cacheManager.set(key, value, ttl)

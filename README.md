@@ -70,3 +70,10 @@ REDIS_PORT=aaa
 REDIS_HOST=
 ```
 
+
+
+## Testing
+
+We DON'T recommend running testing in a live account as it will create faker records, it should cleanup but if a test fails, you may have to perform some manual cleanup. It's best to create a new/sandbox AWeber account for testing.
+
+You will need to authenticate with AWeber manually (using the OAuth flow) prior to running the test suite.
