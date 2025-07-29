@@ -2,7 +2,7 @@ import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
 import { AWeberCampaignQuery, AWeberFindCampaignsQuery, AWeberCampaignStatsQuery } from './campaigns.dto'
 import { campaignMock, campaignStatisticMock } from './campaigns.mocks'
-import { AWeberCampaign, AWeberCampaignStatistic, CampaignType, CampaignStatsId } from './campaigns.types'
+import { AWeberCampaign, AWeberCampaignStatistic, AWeberCampaignType, AWeberCampaignStatsId } from './campaigns.types'
 import { Injectable, Logger } from '@nestjs/common'
 
 @Injectable()
@@ -50,7 +50,7 @@ export class CampaignsService {
 	async getCampaign(
 		accountId: number,
 		listId: number,
-		campaignType: CampaignType,
+		campaignType: AWeberCampaignType,
 		campaignId: string,
 	): Promise<AWeberCampaign> {
 		if (process.env.NODE_ENV === 'test') {
@@ -162,7 +162,7 @@ export class CampaignsService {
 		accountId: number,
 		listId: number,
 		campaignId: string,
-		statsId: CampaignStatsId,
+		statsId: AWeberCampaignStatsId,
 	): Promise<AWeberCampaignStatistic> {
 		if (process.env.NODE_ENV === 'test') {
 			return campaignStatisticMock

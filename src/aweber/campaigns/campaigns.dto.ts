@@ -1,4 +1,4 @@
-import { CampaignType } from './campaigns.types'
+import { AWeberCampaignType } from './campaigns.types'
 import { Transform } from 'class-transformer'
 import { IsString, IsOptional, IsNumber, IsEnum } from 'class-validator'
 
@@ -20,7 +20,7 @@ export class AWeberFindCampaignsQuery {
 	'ws.op'?: string //The method name - expecting "find"
 
 	@IsEnum(['b', 'f'])
-	campaign_type!: CampaignType //The campaign type (b - broadcast, f - followup)
+	campaign_type!: AWeberCampaignType //The campaign type (b - broadcast, f - followup)
 
 	@IsNumber()
 	@IsOptional()

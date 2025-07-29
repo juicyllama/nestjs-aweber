@@ -11,6 +11,7 @@ export { IntegrationsService } from './aweber/integrations/integrations.service'
 export { LandingPagesService } from './aweber/landingPages/landingPages.service'
 export { ListsService } from './aweber/lists/lists.service'
 export { SegmentsService } from './aweber/segments/segments.service'
+export { SubscribersService } from './aweber/subscribers/subscribers.service'
 
 //Config
 export { AWeberConfigDto } from './config/config.dto'
@@ -32,15 +33,28 @@ export {
 export {
 	AWeberCampaign,
 	AWeberCampaignStatistic,
-	CampaignType,
-	CampaignContentType,
-	CampaignStatsId,
+	AWeberCampaignType,
+	AWeberCampaignContentType,
+	AWeberCampaignStatsId,
 } from './aweber/campaigns/campaigns.types'
 export { AWeberCustomField } from './aweber/customFields/customFields.types'
 export { AWeberIntegration } from './aweber/integrations/integrations.types'
 export { AWeberLandingPage, LandingPageStatus } from './aweber/landingPages/landingPages.types'
 export { AWeberList, AWeberListTags } from './aweber/lists/lists.types'
 export { AWeberSegment } from './aweber/segments/segments.types'
+export {
+	AWeberSubscriber,
+	AWeberSubscriberActivity,
+	AWeberSubscriberTotal,
+	AWeberMoveSubscriberResponse,
+	AWeberCreatePurchaseResponse,
+	AWeberSubscriberStatus,
+	AWeberSubscriptionMethod,
+	AWeberUnsubscribeMethod,
+	AWeberSubscriberSortKey,
+	AWeberSortOrder,
+	AWeberSubscriberActivityType,
+} from './aweber/subscribers/subscribers.types'
 
 //DTOs
 export { AWeberAccountQuery } from './aweber/accounts/accounts.dto'
@@ -67,3 +81,13 @@ export { AWeberIntegrationsQuery } from './aweber/integrations/integrations.dto'
 export { AWeberLandingPageQuery, AWeberLandingPageParams } from './aweber/landingPages/landingPages.dto'
 export { AWeberListQuery, AWeberFindListQuery } from './aweber/lists/lists.dto'
 export { AWeberSegmentsQuery } from './aweber/segments/segments.dto'
+export {
+	AWeberGetSubscribersDto,
+	AWeberCreateSubscriberDto,
+	AWeberUpdateSubscriberDto,
+	AWeberUpdateSubscriberByEmailDto,
+	AWeberFindSubscribersDto,
+	AWeberGetSubscriberActivityDto,
+	AWeberMoveSubscriberDto,
+	AWeberCreatePurchaseDto,
+} from './aweber/subscribers/subscribers.dto'

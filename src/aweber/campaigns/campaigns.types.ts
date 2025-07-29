@@ -1,8 +1,8 @@
-export type CampaignType = 'b' | 'f' // b = broadcast, f = followup
+export type AWeberCampaignType = 'b' | 'f' // b = broadcast, f = followup
 
-export type CampaignContentType = 'Text' | 'HTML' | 'Text/HTML'
+export type AWeberCampaignContentType = 'Text' | 'HTML' | 'Text/HTML'
 
-export type CampaignStatsId =
+export type AWeberCampaignStatsId =
 	| 'total_clicks'
 	| 'unique_clicks'
 	| 'total_opens'
@@ -26,9 +26,9 @@ export type CampaignStatsId =
 	| 'sales_by_subscriber'
 
 export type AWeberCampaign = {
-	campaign_type: CampaignType
+	campaign_type: AWeberCampaignType
 	click_tracking_enabled: boolean
-	content_type: CampaignContentType
+	content_type: AWeberCampaignContentType
 	id: string
 	is_archived: boolean
 	links_collection_link: URL | string
@@ -52,7 +52,7 @@ export type AWeberCampaign = {
 
 export type AWeberCampaignStatistic = {
 	description: string
-	id: CampaignStatsId
+	id: AWeberCampaignStatsId
 	resource_type_link: URL | string
 	self_link: URL | string
 	value: number
