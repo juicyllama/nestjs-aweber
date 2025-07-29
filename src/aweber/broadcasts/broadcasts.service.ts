@@ -15,6 +15,8 @@ import {
 	broadcastTotalMock,
 	scheduleBroadcastMock,
 	cancelBroadcastMock,
+    broadcastClickMock,
+    broadcastOpenMock,
 } from './broadcasts.mocks'
 import {
 	AWeberBroadcast,
@@ -330,13 +332,7 @@ export class BroadcastsService {
 		params?: AWeberBroadcastOpensQuery,
 	): Promise<AWeberBroadcastOpen[]> {
 		if (process.env.NODE_ENV === 'test') {
-			return [
-				{
-					event_time: '2020-09-04T18:33:34+00:00',
-					subscriber_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789',
-					email: 'subscriber@example.com',
-				},
-			]
+			return [broadcastOpenMock]
 		}
 
 		const accessToken = await this.authService.accessToken()
@@ -374,14 +370,7 @@ export class BroadcastsService {
 		params?: AWeberBroadcastClicksQuery,
 	): Promise<AWeberBroadcastClick[]> {
 		if (process.env.NODE_ENV === 'test') {
-			return [
-				{
-					event_time: '2020-09-04T18:33:34+00:00',
-					subscriber_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789',
-					link_url: 'https://example.com/clicked-link',
-					email: 'subscriber@example.com',
-				},
-			]
+			return [broadcastClickMock]
 		}
 
 		const accessToken = await this.authService.accessToken()
