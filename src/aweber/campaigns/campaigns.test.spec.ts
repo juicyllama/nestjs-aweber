@@ -34,9 +34,9 @@ describe('Campaigns', () => {
 		})
 
 		it('should get a specific campaign', async () => {
-			const campaign = await campaignsService.getCampaign(123, 456, 'b', 1234567)
+			const campaign = await campaignsService.getCampaign(123, 456, 'b', '1234567')
 			expect(campaign).toBeDefined()
-			expect(campaign.id).toBe(1234567)
+			expect(campaign.id).toBe('1234567')
 			expect(campaign.subject).toBe('Weekly Recipes')
 			expect(campaign.campaign_type).toBe('b')
 			expect(campaign.click_tracking_enabled).toBe(true)
@@ -58,7 +58,7 @@ describe('Campaigns', () => {
 		})
 
 		it('should get broadcast statistics for a campaign', async () => {
-			const stats = await campaignsService.getBroadcastStatistics(123, 456, 789, {
+			const stats = await campaignsService.getBroadcastStatistics(123, 456, '789', {
 				'ws.start': '0',
 				'ws.size': '100',
 			})
@@ -71,7 +71,7 @@ describe('Campaigns', () => {
 		})
 
 		it('should get a specific broadcast statistic for a campaign', async () => {
-			const statistic = await campaignsService.getBroadcastStatistic(123, 456, 789, 'total_clicks')
+			const statistic = await campaignsService.getBroadcastStatistic(123, 456, '789', 'total_clicks')
 			expect(statistic).toBeDefined()
 			expect(statistic.id).toBe('total_clicks')
 			expect(statistic.value).toBe(21)

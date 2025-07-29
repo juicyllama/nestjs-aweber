@@ -29,17 +29,17 @@ export type AWeberCampaign = {
 	campaign_type: CampaignType
 	click_tracking_enabled: boolean
 	content_type: CampaignContentType
-	id: number
+	id: string
 	is_archived: boolean
-	links_collection_link: string
+	links_collection_link: URL | string
 	message_interval: number
 	message_number: number
-	resource_type_link: string
+	resource_type_link: URL | string
 	scheduled_at?: string
-	self_link: string
+	self_link: URL | string
 	sent_at?: string
 	spam_assassin_score?: number
-	stats_collection_link: string
+	stats_collection_link: URL | string
 	subject: string
 	total_clicks: number
 	total_opens: number
@@ -47,13 +47,13 @@ export type AWeberCampaign = {
 	total_spam_complaints: number
 	total_undelivered: number
 	total_unsubscribes: number
-	twitter_account_link?: string
+	twitter_account_link?: URL | string
 }
 
 export type AWeberCampaignCollection = {
 	entries: AWeberCampaign[]
-	next_collection_link?: string
-	prev_collection_link?: string
+	next_collection_link?: URL | string
+	prev_collection_link?: URL | string
 	start: number
 	total_size: number
 }
@@ -61,16 +61,16 @@ export type AWeberCampaignCollection = {
 export type AWeberCampaignStatistic = {
 	description: string
 	id: CampaignStatsId
-	resource_type_link: string
-	self_link: string
+	resource_type_link: URL | string
+	self_link: URL | string
 	value: number
 }
 
 export type AWeberCampaignStats = {
 	entries: AWeberCampaignStatistic[]
-	next_collection_link?: string
-	prev_collection_link?: string
-	resource_type_link: string
+	next_collection_link?: URL | string
+	prev_collection_link?: URL | string
+	resource_type_link: URL | string
 	start: number
 	total_size: number
 }

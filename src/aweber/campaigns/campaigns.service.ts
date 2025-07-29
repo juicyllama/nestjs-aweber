@@ -66,7 +66,7 @@ export class CampaignsService {
 		accountId: number,
 		listId: number,
 		campaignType: CampaignType,
-		campaignId: number,
+		campaignId: string,
 	): Promise<AWeberCampaign> {
 		if (process.env.NODE_ENV === 'test') {
 			return campaignMock
@@ -137,7 +137,7 @@ export class CampaignsService {
 	async getBroadcastStatistics(
 		accountId: number,
 		listId: number,
-		campaignId: number,
+		campaignId: string,
 		params?: AWeberCampaignStatsQuery,
 	): Promise<AWeberCampaignStats> {
 		if (process.env.NODE_ENV === 'test') {
@@ -174,7 +174,7 @@ export class CampaignsService {
 	async getBroadcastStatistic(
 		accountId: number,
 		listId: number,
-		campaignId: number,
+		campaignId: string,
 		statsId: CampaignStatsId,
 	): Promise<AWeberCampaignStatistic> {
 		if (process.env.NODE_ENV === 'test') {

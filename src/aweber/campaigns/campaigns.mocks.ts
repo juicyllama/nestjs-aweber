@@ -9,7 +9,7 @@ export const campaignMock: AWeberCampaign = {
 	campaign_type: 'b',
 	click_tracking_enabled: true,
 	content_type: 'Text',
-	id: 1234567,
+	id: '1234567',
 	is_archived: true,
 	links_collection_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789/links',
 	message_interval: 1,

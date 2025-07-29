@@ -56,6 +56,7 @@ export const broadcastCollectionMock = {
 	resource_type_link: 'https://api.aweber.com/1.0/#broadcast-page-resource',
 	self_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts?status=sent&ws.size=1&ws.start=0',
 	start: 0,
+	total_size: 1,
 	total_size_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/total?status=draft',
 }
 
