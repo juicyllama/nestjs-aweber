@@ -38,36 +38,27 @@ npm i @juicyllama/nestjs-aweber
 
 ## Usage
 
-1. Create AWeber App (or get credentials from existing app)
-2. Add
+1. Create an AWeber App (or get credentials from existing app)
+2. Authenticate your NestJS application with AWeber (#Oauth2)
+3. Integrate your NestJS application with the relevant modules (e.g. endpoints) required
 
-```bash
-zzz=xxxx
-
-```
-
-3. 
-
-TODO:
+You can checkout the [Sandbox](./src/sandbox/) for an example implementation.
 
 ### Oauth2
 
 Once you have the module running in your app, it automatically exposes the endpoints required to connect via OAuth2
 
-1. Visit: `/app/aweber/auth` and copy the URL
-2. Open the URL in a browser window
-TODO:
-
+Visit: `/app/aweber/auth` and connect to your AWeber account
 
 ### Cache / Redis
 
 As standard the app will use local memory for storing the OAuth Tokens which is not best practice as you will need to reauth each time you restart the service (and the memory is cleared).
 
-We recommend using Redis which ships out of the box, all you need to provide are the following environment values and the cache will revert to redis.
+We recommend using Redis which ships out of the box, provide your redis environment values and the cache will revert to redis.
 
 ```bash
-REDIS_PORT=aaa
-REDIS_HOST=
+REDIS_PORT=localhost
+REDIS_HOST=6379
 ```
 
 ## Types
