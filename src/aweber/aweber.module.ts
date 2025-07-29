@@ -10,6 +10,7 @@ import { IntegrationsModule } from './integrations/integrations.module'
 import { LandingPagesModule } from './landingPages/landingPages.module'
 import { ListsModule } from './lists/lists.module'
 import { SegmentsModule } from './segments/segments.module'
+import { SubscribersModule } from './subscribers/subscribers.module'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 
@@ -29,6 +30,7 @@ import { Module } from '@nestjs/common'
 		LandingPagesModule,
 		ListsModule,
 		SegmentsModule,
+		SubscribersModule,
 	],
 })
 export class AWeberModule {}
