@@ -1,20 +1,8 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
 import { AWeberCampaignQuery, AWeberFindCampaignsQuery, AWeberCampaignStatsQuery } from './campaigns.dto'
-import {
-	campaignMock,
-	campaignCollectionMock,
-	campaignStatsCollectionMock,
-	campaignStatisticMock,
-} from './campaigns.mocks'
-import {
-	AWeberCampaign,
-	AWeberCampaignCollection,
-	AWeberCampaignStats,
-	AWeberCampaignStatistic,
-	CampaignType,
-	CampaignStatsId,
-} from './campaigns.types'
+import { campaignMock, campaignStatisticMock } from './campaigns.mocks'
+import { AWeberCampaign, AWeberCampaignStatistic, CampaignType, CampaignStatsId } from './campaigns.types'
 import { Injectable, Logger } from '@nestjs/common'
 
 @Injectable()
@@ -26,13 +14,9 @@ export class CampaignsService {
 	/**
 	 * Get campaigns for a specific list
 	 */
-	async getCampaigns(
-		accountId: number,
-		listId: number,
-		params?: AWeberCampaignQuery,
-	): Promise<AWeberCampaignCollection> {
+	async getCampaigns(accountId: number, listId: number, params?: AWeberCampaignQuery): Promise<AWeberCampaign[]> {
 		if (process.env.NODE_ENV === 'test') {
-			return campaignCollectionMock
+			return [campaignMock]
 		}
 
 		const accessToken = await this.authService.accessToken()
@@ -56,7 +40,8 @@ export class CampaignsService {
 			throw new Error(`Get Campaigns API Call failed: ${response.status}`)
 		}
 
-		return (await response.json()) as AWeberCampaignCollection
+		const responseData = (await response.json()) as { entries: AWeberCampaign[] }
+		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
 	/**
@@ -101,9 +86,9 @@ export class CampaignsService {
 		accountId: number,
 		listId: number,
 		params: AWeberFindCampaignsQuery,
-	): Promise<AWeberCampaignCollection> {
+	): Promise<AWeberCampaign[]> {
 		if (process.env.NODE_ENV === 'test') {
-			return campaignCollectionMock
+			return [campaignMock]
 		}
 
 		const accessToken = await this.authService.accessToken()
@@ -128,7 +113,8 @@ export class CampaignsService {
 			throw new Error(`Find Campaigns API Call failed: ${response.status}`)
 		}
 
-		return (await response.json()) as AWeberCampaignCollection
+		const responseData = (await response.json()) as { entries: AWeberCampaign[] }
+		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
 	/**
@@ -139,9 +125,9 @@ export class CampaignsService {
 		listId: number,
 		campaignId: string,
 		params?: AWeberCampaignStatsQuery,
-	): Promise<AWeberCampaignStats> {
+	): Promise<AWeberCampaignStatistic[]> {
 		if (process.env.NODE_ENV === 'test') {
-			return campaignStatsCollectionMock
+			return [campaignStatisticMock]
 		}
 
 		const accessToken = await this.authService.accessToken()
@@ -165,7 +151,8 @@ export class CampaignsService {
 			throw new Error(`Get Broadcast Statistics API Call failed: ${response.status}`)
 		}
 
-		return (await response.json()) as AWeberCampaignStats
+		const responseData = (await response.json()) as { entries: AWeberCampaignStatistic[] }
+		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
 	/**

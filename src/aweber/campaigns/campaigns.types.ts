@@ -50,27 +50,10 @@ export type AWeberCampaign = {
 	twitter_account_link?: URL | string
 }
 
-export type AWeberCampaignCollection = {
-	entries: AWeberCampaign[]
-	next_collection_link?: URL | string
-	prev_collection_link?: URL | string
-	start: number
-	total_size: number
-}
-
 export type AWeberCampaignStatistic = {
 	description: string
 	id: CampaignStatsId
 	resource_type_link: URL | string
 	self_link: URL | string
 	value: number
-}
-
-export type AWeberCampaignStats = {
-	entries: AWeberCampaignStatistic[]
-	next_collection_link?: URL | string
-	prev_collection_link?: URL | string
-	resource_type_link: URL | string
-	start: number
-	total_size: number
 }

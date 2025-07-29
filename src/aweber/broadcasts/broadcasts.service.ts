@@ -11,7 +11,6 @@ import {
 } from './broadcasts.dto'
 import {
 	broadcastMock,
-	broadcastCollectionMock,
 	broadcastTotalMock,
 	scheduleBroadcastMock,
 	cancelBroadcastMock,
@@ -20,7 +19,6 @@ import {
 } from './broadcasts.mocks'
 import {
 	AWeberBroadcast,
-	AWeberBroadcastCollection,
 	AWeberBroadcastTotal,
 	AWeberBroadcastScheduleResponse,
 	AWeberBroadcastCancelResponse,
@@ -38,13 +36,9 @@ export class BroadcastsService {
 	/**
 	 * Get broadcasts for a specific list
 	 */
-	async getBroadcasts(
-		accountId: number,
-		listId: number,
-		params: AWeberBroadcastQuery,
-	): Promise<AWeberBroadcastCollection> {
+	async getBroadcasts(accountId: number, listId: number, params: AWeberBroadcastQuery): Promise<AWeberBroadcast[]> {
 		if (process.env.NODE_ENV === 'test') {
-			return broadcastCollectionMock
+			return [broadcastMock]
 		}
 
 		const accessToken = await this.authService.accessToken()
@@ -68,7 +62,8 @@ export class BroadcastsService {
 			throw new Error(`Get Broadcasts API Call failed: ${response.status}`)
 		}
 
-		return (await response.json()) as AWeberBroadcastCollection
+		const responseData = (await response.json()) as { entries: AWeberBroadcast[] }
+		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
 	/**

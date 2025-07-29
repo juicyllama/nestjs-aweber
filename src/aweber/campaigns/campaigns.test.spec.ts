@@ -26,11 +26,11 @@ describe('Campaigns', () => {
 		it('should get campaigns for a list', async () => {
 			const campaigns = await campaignsService.getCampaigns(123, 456, { 'ws.start': '0', 'ws.size': '100' })
 			expect(campaigns).toBeDefined()
-			expect(campaigns.entries).toBeDefined()
-			expect(campaigns.entries.length).toBeGreaterThan(0)
-			expect(campaigns.entries[0].id).toBeDefined()
-			expect(campaigns.entries[0].subject).toBeDefined()
-			expect(campaigns.entries[0].campaign_type).toBeDefined()
+			expect(campaigns).toBeDefined()
+			expect(campaigns.length).toBeGreaterThan(0)
+			expect(campaigns[0].id).toBeDefined()
+			expect(campaigns[0].subject).toBeDefined()
+			expect(campaigns[0].campaign_type).toBeDefined()
 		})
 
 		it('should get a specific campaign', async () => {
@@ -52,9 +52,8 @@ describe('Campaigns', () => {
 			}
 			const campaigns = await campaignsService.findCampaigns(123, 456, findQuery)
 			expect(campaigns).toBeDefined()
-			expect(campaigns.entries).toBeDefined()
-			expect(campaigns.entries.length).toBeGreaterThan(0)
-			expect(campaigns.entries[0].campaign_type).toBe('b')
+			expect(campaigns.length).toBeGreaterThan(0)
+			expect(campaigns[0].campaign_type).toBe('b')
 		})
 
 		it('should get broadcast statistics for a campaign', async () => {
@@ -63,11 +62,10 @@ describe('Campaigns', () => {
 				'ws.size': '100',
 			})
 			expect(stats).toBeDefined()
-			expect(stats.entries).toBeDefined()
-			expect(stats.entries.length).toBeGreaterThan(0)
-			expect(stats.entries[0].id).toBeDefined()
-			expect(stats.entries[0].value).toBeDefined()
-			expect(stats.entries[0].description).toBeDefined()
+			expect(stats.length).toBeGreaterThan(0)
+			expect(stats[0].id).toBeDefined()
+			expect(stats[0].value).toBeDefined()
+			expect(stats[0].description).toBeDefined()
 		})
 
 		it('should get a specific broadcast statistic for a campaign', async () => {

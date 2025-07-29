@@ -47,19 +47,6 @@ export const broadcastMock: AWeberBroadcast = {
 	twitter_integration: 'https://api.aweber.com/1.0/accounts/123/integrations/2',
 }
 
-export const broadcastCollectionMock = {
-	entries: [broadcastMock],
-	next_collection_link:
-		'https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts?status=sent&ws.size=1&ws.start=1',
-	prev_collection_link:
-		'https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts?status=sent&ws.size=1&ws.start=0',
-	resource_type_link: 'https://api.aweber.com/1.0/#broadcast-page-resource',
-	self_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts?status=sent&ws.size=1&ws.start=0',
-	start: 0,
-	total_size: 1,
-	total_size_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/total?status=draft',
-}
-
 export const broadcastTotalMock = {
 	total_size: 4,
 }

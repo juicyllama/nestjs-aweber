@@ -1,9 +1,4 @@
-import {
-	AWeberCampaign,
-	AWeberCampaignCollection,
-	AWeberCampaignStats,
-	AWeberCampaignStatistic,
-} from './campaigns.types'
+import { AWeberCampaign, AWeberCampaignStatistic } from './campaigns.types'
 
 export const campaignMock: AWeberCampaign = {
 	campaign_type: 'b',
@@ -28,40 +23,6 @@ export const campaignMock: AWeberCampaign = {
 	total_undelivered: 0,
 	total_unsubscribes: 0,
 	twitter_account_link: 'https://api.aweber.com/1.0/account/123/integrations/456',
-}
-
-export const campaignCollectionMock: AWeberCampaignCollection = {
-	entries: [campaignMock],
-	next_collection_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100',
-	prev_collection_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100',
-	start: 0,
-	total_size: 0,
-}
-
-export const campaignStatsCollectionMock: AWeberCampaignStats = {
-	entries: [
-		{
-			description:
-				'total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link)',
-			id: 'total_clicks',
-			resource_type_link: 'https://api.aweber.com/1.0/#integer_stat',
-			self_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats/total_clicks',
-			value: 21,
-		},
-		{
-			description:
-				'total number of unique subscribers who clicked any link appearing in your campaign except the unsubscribe link',
-			id: 'unique_clicks',
-			resource_type_link: 'https://api.aweber.com/1.0/#integer_stat',
-			self_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats/unique_clicks',
-			value: 15,
-		},
-	],
-	next_collection_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1',
-	prev_collection_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1',
-	resource_type_link: 'https://api.aweber.com/1.0/#stat-page-resource',
-	start: 1,
-	total_size: 10,
 }
 
 export const campaignStatisticMock: AWeberCampaignStatistic = {
