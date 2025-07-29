@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common'
-import { InjectConfig } from '../../config/config.provider'
-import { AWeberConfigDto } from '../../config/config.dto'
-import { AWeberOAuthInterface } from './auth.interface'
-import { AWEBER_OAUTH_URL, AWEBER_TOKEN_URL, OAUTH_CACHE_KEY } from './auth.constants'
 import { LocalCacheService } from '../../config/cache/local.cache.service'
+import { AWeberConfigDto } from '../../config/config.dto'
+import { InjectConfig } from '../../config/config.provider'
+import { AWEBER_OAUTH_URL, AWEBER_TOKEN_URL, OAUTH_CACHE_KEY } from './auth.constants'
+import { AWeberOAuthInterface } from './auth.interface'
+import { Injectable, Logger } from '@nestjs/common'
 
 interface TokenResponse {
 	access_token: string
@@ -23,7 +23,7 @@ export class AuthService {
 	) {}
 
 	async accessToken(): Promise<string> {
-		const cachedOAuth = await this.localConfigService.read(OAUTH_CACHE_KEY)
+		const cachedOAuth = (await this.localConfigService.read(OAUTH_CACHE_KEY)) as AWeberOAuthInterface
 
 		// Check if we have valid cached tokens
 		if (cachedOAuth && cachedOAuth.refresh_token) {
@@ -31,7 +31,7 @@ export class AuthService {
 			const expiresAt = new Date(cachedOAuth.expires_at)
 			const now = new Date()
 			const bufferTime = 5 * 60 * 1000 // 5 minutes in milliseconds
-			
+
 			if (expiresAt.getTime() > now.getTime() + bufferTime) {
 				this.logger.debug('Using cached access token')
 				return cachedOAuth.access_token
@@ -66,7 +66,7 @@ export class AuthService {
 			'email.read',
 			'email.write',
 			'subscriber.read-extended',
-			'landing-page.read'
+			'landing-page.read',
 		]
 
 		const params = new URLSearchParams({
@@ -91,7 +91,7 @@ export class AuthService {
 				code,
 			})
 			const oauth = await this.saveTokenResponse(tokenResponse)
-			
+
 			this.logger.debug('Successfully exchanged authorization code for tokens', oauth)
 			return oauth.access_token
 		} catch (error) {
@@ -114,12 +114,14 @@ export class AuthService {
 	 * Make a token request to AWeber's OAuth2 endpoint
 	 */
 	private async requestAccessToken(params: Record<string, string>): Promise<TokenResponse> {
-		const credentials = Buffer.from(`${this.config.AWEBER_CLIENT_ID}:${this.config.AWEBER_CLIENT_SECRET}`).toString('base64')
-		
+		const credentials = Buffer.from(`${this.config.AWEBER_CLIENT_ID}:${this.config.AWEBER_CLIENT_SECRET}`).toString(
+			'base64',
+		)
+
 		const response = await fetch(AWEBER_TOKEN_URL, {
 			method: 'POST',
 			headers: {
-				'Authorization': `Basic ${credentials}`,
+				Authorization: `Basic ${credentials}`,
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
 			body: new URLSearchParams(params).toString(),
@@ -131,7 +133,7 @@ export class AuthService {
 			throw new Error(`Token request failed: ${response.status}`)
 		}
 
-		const tokenResponse: TokenResponse = await response.json()
+		const tokenResponse = (await response.json()) as TokenResponse
 		return tokenResponse
 	}
 

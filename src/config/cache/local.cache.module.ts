@@ -1,9 +1,9 @@
-import Redis from 'ioredis'
+import { ConfigValidationModule } from '../config.module'
+import { REDIS_CACHE_TOKEN } from './cache.constants'
+import { CacheConfigDto } from './cache.dto'
+import { LocalCacheService } from './local.cache.service'
 import { Module } from '@nestjs/common'
-import { ConfigValidationModule } from "../config.module";
-import { CacheConfigDto } from './cache.dto';
-import { LocalCacheService } from "./local.cache.service";
-import { REDIS_CACHE_TOKEN } from './cache.constants';
+import Redis from 'ioredis'
 
 function createRedisCache() {
 	if (process.env.REDIS_PORT && process.env.REDIS_HOST) {
@@ -16,9 +16,7 @@ function createRedisCache() {
 }
 
 @Module({
-	imports: [
-		ConfigValidationModule.register(CacheConfigDto),
-	],
+	imports: [ConfigValidationModule.register(CacheConfigDto)],
 	providers: [
 		LocalCacheService,
 		{

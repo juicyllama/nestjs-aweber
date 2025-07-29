@@ -1,19 +1,18 @@
+import { REDIS_CACHE_TOKEN } from './cache.constants'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable, Logger, OnApplicationShutdown } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Cache } from 'cache-manager'
 import Redis from 'ioredis'
-import { REDIS_CACHE_TOKEN } from './cache.constants'
 
 @Injectable()
 export class LocalCacheService implements OnApplicationShutdown {
-
 	private readonly logger = new Logger()
 
 	constructor(
 		@Inject(REDIS_CACHE_TOKEN) private readonly redis: Redis,
 		@Inject(CACHE_MANAGER) private cacheManager: Cache,
-		private readonly configService: ConfigService
+		private readonly configService: ConfigService,
 	) {}
 
 	onApplicationShutdown() {
@@ -34,7 +33,7 @@ export class LocalCacheService implements OnApplicationShutdown {
 	 * * otherwise will use in-memory cache
 	 */
 
-	public async read(key: string): Promise<any> {
+	public async read(key: string): Promise<unknown> {
 		if (this.useRedis()) {
 			if (this.redis.status !== 'ready') {
 				this.logger.error('Redis client is not ready', this.redis)
@@ -57,13 +56,12 @@ export class LocalCacheService implements OnApplicationShutdown {
 	 */
 
 	public async write(key: string, value: any, ttl?: number): Promise<void> {
-	
 		if (this.useRedis()) {
 			if (this.redis.status !== 'ready') {
 				throw new Error('Redis client not ready')
 			}
 
-			if( !ttl || ttl <= 0) {
+			if (!ttl || ttl <= 0) {
 				// If no TTL is provided, don't set a TTL
 				this.logger.debug(`Cache write to Redis: ${key} without TTL`)
 				await this.redis.set(key, JSON.stringify(value))
@@ -71,7 +69,6 @@ export class LocalCacheService implements OnApplicationShutdown {
 				this.logger.debug(`Cache write to Redis: ${key} with TTL: ${ttl}ms`)
 				await this.redis.set(key, JSON.stringify(value), 'PX', ttl)
 			}
-			
 		} else {
 			this.logger.debug(`Cache write to in-memory: ${key} with TTL: ${ttl}ms`)
 			await this.cacheManager.set(key, value, ttl)

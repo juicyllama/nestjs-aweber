@@ -1,11 +1,11 @@
-import { Controller, Get, Req, Res,Logger, UnauthorizedException } from '@nestjs/common'
+import { LocalCacheService } from '../../config/cache/local.cache.service'
+import { AUTH_REDIRECT_URI, OAUTH_CACHE_KEY } from './auth.constants'
 import { AuthService } from './auth.service'
-import { AUTH_REDIRECT_URI, OAUTH_CACHE_KEY } from './auth.constants';
-import { LocalCacheService } from '../../config/cache/local.cache.service';
+import { Controller, Get, Req, Res, Logger, UnauthorizedException } from '@nestjs/common'
+import { Request, Response } from 'express'
 
 @Controller('/app/aweber/auth')
 export class AuthController {
-
 	private readonly logger = new Logger()
 
 	constructor(
@@ -14,38 +14,37 @@ export class AuthController {
 	) {}
 
 	@Get()
-	async getAuthUrl(@Req() req: any, @Res() res: any): Promise<{ url: string }> {
-
+	async getAuthUrl(@Req() req: Request, @Res() res: Response): Promise<void> {
 		//Only allow this endpoint to be called if !token exists in cache
-		if (!await this.localConfigService.read(OAUTH_CACHE_KEY)) {
+		if (!(await this.localConfigService.read(OAUTH_CACHE_KEY))) {
 			const redirect_uri = `${req.protocol}://${req.get('Host')}/${AUTH_REDIRECT_URI}`
-			return res.redirect(this.authService.getAuthorizationUrl(redirect_uri));
+			return res.redirect(this.authService.getAuthorizationUrl(redirect_uri))
 		}
 
-		throw new UnauthorizedException('AWeber OAuth access token already exists. Please clear tokens before requesting a new authorization URL.');
+		throw new UnauthorizedException(
+			'AWeber OAuth access token already exists. Please clear tokens before requests a new authorization URL.',
+		)
 	}
 
 	@Get('/callback')
-	async callback(@Req() req: any, @Res() res: any): Promise<void> {
+	async callback(@Req() req: Request, @Res() res: Response): Promise<void> {
+		this.logger.log('AWeber OAuth callback received:', req.query)
 
-		this.logger.log('AWeber OAuth callback received:', req.query);
-
-		const { code } = req.query;
+		const { code } = req.query as { code?: string }
 
 		if (!code) {
-			throw new UnauthorizedException('Authorization code is required');
+			throw new UnauthorizedException('Authorization code is required')
 		}
 
 		// Exchange the authorization code for an access token
-		const tokenResponse = await this.authService.exchangeCodeForToken(code);
+		const tokenResponse = await this.authService.exchangeCodeForToken(code)
 		if (!tokenResponse) {
-			throw new UnauthorizedException('Failed to obtain access token');
+			throw new UnauthorizedException('Failed to obtain access token')
 		}
 
-		return res.status(200).json({
+		res.status(200).json({
 			message: 'Authorization successful',
 			access_token: tokenResponse,
-		});
-
+		})
 	}
 }

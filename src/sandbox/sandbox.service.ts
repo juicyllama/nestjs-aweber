@@ -1,6 +1,6 @@
-import { Injectable, Logger, Req } from '@nestjs/common'
-import { AccountsService } from '../aweber/accounts/accounts.service';
-import { AuthService } from '../aweber/auth/auth.service';
+import { AccountsService } from '../aweber/accounts/accounts.service'
+import { AuthService } from '../aweber/auth/auth.service'
+import { Injectable, Logger } from '@nestjs/common'
 
 @Injectable()
 export class SandboxService {
@@ -11,21 +11,14 @@ export class SandboxService {
 		private readonly authService: AuthService,
 	) {}
 
-	async run(@Req() req: any): Promise<any> {
-
-		this.logger.log('Running sandbox service...');
+	async run(): Promise<any> {
+		this.logger.log('Running sandbox service...')
 		const accessToken = await this.authService.accessToken()
-		this.logger.log('Access Token:', accessToken);
+		this.logger.log('Access Token:', accessToken)
 
-		const accounts = await this.accountService.getAccounts();
-		this.logger.log('Fetched accounts:', accounts);
+		const accounts = await this.accountService.getAccounts()
+		this.logger.log('Fetched accounts:', accounts)
 
-		const account = await this.accountService.getAccount(2334217);
-		this.logger.log('Fetched account:', account);
-
-		return { message: 'Sandbox service is running' };
-
+		return { message: 'Sandbox service is running' }
 	}
-
-
 }

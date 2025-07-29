@@ -1,33 +1,24 @@
-import { Test } from '@nestjs/testing'
-import { INestApplication } from '@nestjs/common'
-import { AccountsService } from './accounts.service'
 import { AuthModule } from '../auth/auth.module'
-import { AccountsModule } from './accounts.module'
-import { ConfigModule } from '@nestjs/config'
 import { AWeberModule } from '../aweber.module'
+import { AccountsModule } from './accounts.module'
+import { AccountsService } from './accounts.service'
+import { INestApplication } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { Test } from '@nestjs/testing'
 
 describe('Accounts', () => {
-
-	let app: INestApplication;
+	let app: INestApplication
 	let accountsService: AccountsService
 
 	beforeAll(async () => {
-
 		const moduleRef = await Test.createTestingModule({
-			imports: [
-				ConfigModule.forRoot(), 
-				AWeberModule,
-				AuthModule,
-				AccountsModule
-			],
-		})
-      	.compile();
+			imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, AccountsModule],
+		}).compile()
 
-		app = moduleRef.createNestApplication();
-		await app.init();
+		app = moduleRef.createNestApplication()
+		await app.init()
 
 		accountsService = moduleRef.get<AccountsService>(AccountsService)
-		
 	})
 
 	describe('Get', () => {
@@ -49,8 +40,7 @@ describe('Accounts', () => {
 		})
 	})
 
-
 	afterAll(async () => {
-		await app.close();
+		await app.close()
 	})
 })
