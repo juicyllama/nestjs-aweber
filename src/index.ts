@@ -8,6 +8,7 @@ export { BroadcastsService } from './aweber/broadcasts/broadcasts.service'
 export { CampaignsService } from './aweber/campaigns/campaigns.service'
 export { CustomFieldsService } from './aweber/customFields/customFields.service'
 export { IntegrationsService } from './aweber/integrations/integrations.service'
+export { LandingPagesService } from './aweber/landingPages/landingPages.service'
 
 //Config
 export { AWeberConfigDto } from './config/config.dto'
@@ -35,6 +36,7 @@ export {
 } from './aweber/campaigns/campaigns.types'
 export { AWeberCustomField } from './aweber/customFields/customFields.types'
 export { AWeberIntegration } from './aweber/integrations/integrations.types'
+export { AWeberLandingPage, LandingPageStatus } from './aweber/landingPages/landingPages.types'
 
 //DTOs
 export { AWeberAccountQuery } from './aweber/accounts/accounts.dto'
@@ -58,3 +60,4 @@ export {
 	AWeberUpdateCustomFieldDto,
 } from './aweber/customFields/customFields.dto'
 export { AWeberIntegrationsQuery } from './aweber/integrations/integrations.dto'
+export { AWeberLandingPageQuery, AWeberLandingPageParams } from './aweber/landingPages/landingPages.dto'

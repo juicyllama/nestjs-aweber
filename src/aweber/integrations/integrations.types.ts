@@ -3,6 +3,6 @@ export type AWeberIntegration = {
 	id: number
 	login: string
 	service_name: string
-	resource_type_link: string
-	self_link: string
+	resource_type_link: URL | string
+	self_link: URL | string
 }
