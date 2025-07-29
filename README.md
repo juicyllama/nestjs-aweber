@@ -70,10 +70,16 @@ REDIS_PORT=aaa
 REDIS_HOST=
 ```
 
+## Types
 
+We have typed each AWeber Resource type and have exported them for your use. 
+
+You can import them into your code and reuse them.
 
 ## Testing
 
-We DON'T recommend running testing in a live account as it will create faker records, it should cleanup but if a test fails, you may have to perform some manual cleanup. It's best to create a new/sandbox AWeber account for testing.
+We are using mock data (mirrored from the AWeber documentation) to perform testing.
 
-You will need to authenticate with AWeber manually (using the OAuth flow) prior to running the test suite.
+## Webhooks
+
+This API wrapper does not support webhooks and you should integrate them directly into your application using [AWeber Webhooks Docs](https://api.aweber.com/#section/Getting-Started)

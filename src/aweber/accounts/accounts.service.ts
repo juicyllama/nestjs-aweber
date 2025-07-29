@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { AuthService } from '../auth/auth.service'
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
-import { Account, GetAccountsQuery } from './accounts.dto'
+import { AWeberAccountQuery } from './accounts.dto'
+import { AWeberAccount } from './accounts.types'
 import { accountMock } from './accounts.mocks'
 
 @Injectable()
@@ -12,11 +13,11 @@ export class AccountsService {
 		private readonly authService: AuthService,
 	) {}
 
-	async getAccounts(params?: GetAccountsQuery): Promise<Account[]> {
+	async getAccounts(params?: AWeberAccountQuery): Promise<AWeberAccount[]> {
 
 		if(process.env.NODE_ENV === 'test') {
 			// In test mode, return a mock account
-			return [accountMock] as Account[]
+			return [accountMock] as AWeberAccount[]
 		}
 
 
@@ -45,11 +46,11 @@ export class AccountsService {
 		return responseData.entries || []; // Ensure we return an array, even if empty
 	}
 
-	async getAccount(accountId: number): Promise<Account> {
+	async getAccount(accountId: number): Promise<AWeberAccount> {
 
 		if(process.env.NODE_ENV === 'test') {
 			// In test mode, return a mock account
-			return accountMock as Account;
+			return accountMock as AWeberAccount;
 		}
 
 		const accessToken = await this.authService.accessToken()

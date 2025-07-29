@@ -33,12 +33,19 @@ describe('Accounts', () => {
 	describe('Get', () => {
 		it('Get Accounts', async () => {
 			const accounts = await accountsService.getAccounts()
-
-			console.log(accounts)
 			expect(accounts).toBeDefined()
+			expect(accounts.length).toBeGreaterThan(0)
+			expect(accounts[0].id).toBeDefined()
+			expect(accounts[0].company).toBeDefined()
+			expect(accounts[0].uuid).toBeDefined()
+		})
 
-			//expect(rates.date).toBeDefined()
-			//expect(rates.quotes.USDAUD).toBeDefined()
+		it('Get Account by ID', async () => {
+			const account = await accountsService.getAccount(123)
+			expect(account).toBeDefined()
+			expect(account.id).toBe(123)
+			expect(account.company).toBe('Example Company 1')
+			expect(account.uuid).toBe('b619e767-9de6-43b7-a914-9a8d77a08ee5')
 		})
 	})
 

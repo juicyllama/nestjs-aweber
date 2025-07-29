@@ -10,3 +10,9 @@ export { AWeberConfigDto } from "./config/config.dto";
 
 //Interfaces
 export { AWeberOAuthInterface } from "./aweber/auth/auth.interface";
+
+//Types
+export { AWeberAccount } from "./aweber/accounts/accounts.types";
+
+//DTOs
+export { AWeberAccountQuery } from "./aweber/accounts/accounts.dto";
