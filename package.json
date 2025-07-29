@@ -26,7 +26,7 @@
         "start": "nest start",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "eslint \"src/**/*.ts\" --fix",
-        "test": "NODE_ENV=test && jest --passWithNoTests",
+        "test": "cross-env NODE_ENV=test AWEBER_CLIENT_ID=123 AWEBER_CLIENT_SECRET=456 jest --runInBand --detectOpenHandles --forceExit",
         "post:test": "jest --clearCache",
         "before:commit": "pnpm run lint && pnpm run format && pnpm run test && pnpm run build"
     },
@@ -58,6 +58,7 @@
         "@types/supertest": "^6.0.2",
         "@typescript-eslint/eslint-plugin": "^8.20.0",
         "@typescript-eslint/parser": "^8.20.0",
+        "cross-env": "^10.0.0",
         "eslint": "^9.32.0",
         "eslint-config-prettier": "^10.0.1",
         "eslint-plugin-prettier": "^5.2.2",
