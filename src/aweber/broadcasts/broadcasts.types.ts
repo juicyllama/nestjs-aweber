@@ -22,7 +22,7 @@ export type AWeberBroadcast = {
 	body_amp?: string
 	broadcast_id: number
 	click_tracking_enabled: boolean
-	clicks_collection_link: string
+	clicks_collection_link: URL | string
 	created_at: string
 	exclude_lists: string[]
 	facebook_integration?: string
@@ -31,11 +31,11 @@ export type AWeberBroadcast = {
 	is_archived: boolean
 	links: BroadcastLink[]
 	notify_on_send: boolean
-	opens_collection_link: string
+	opens_collection_link: URL | string
 	scheduled_for?: string
-	segment_link?: string | null
+	segment_link?: URL | string | null
 	segment_name?: string
-	self_link: string
+	self_link: URL | string
 	sent_at?: string
 	stats: BroadcastStats
 	status: BroadcastStatus
@@ -45,12 +45,11 @@ export type AWeberBroadcast = {
 
 export type AWeberBroadcastCollection = {
 	entries: AWeberBroadcast[]
-	next_collection_link?: string
-	prev_collection_link?: string
-	resource_type_link: string
-	self_link: string
-	start: number
-	total_size_link?: string
+	next_collection_link: URL | string | null
+	prev_collection_link: URL | string | null
+	resource_type_link: URL | string
+	total_size: number
+	total_size_link: URL | string
 }
 
 export type AWeberBroadcastTotal = {
@@ -58,22 +57,22 @@ export type AWeberBroadcastTotal = {
 }
 
 export type AWeberBroadcastScheduleResponse = {
-	self_link: string
+	self_link: URL | string
 }
 
 export type AWeberBroadcastCancelResponse = {
-	self_link: string
+	self_link: URL | string
 }
 
 export type AWeberBroadcastOpen = {
 	event_time: string
-	subscriber_link: string
+	subscriber_link: URL | string
 	email?: string
 }
 
 export type AWeberBroadcastClick = {
 	event_time: string
-	subscriber_link: string
+	subscriber_link: URL | string
 	link_url: string
 	email?: string
 }
