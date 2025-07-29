@@ -43,15 +43,6 @@ export type AWeberBroadcast = {
 	twitter_integration?: string
 }
 
-export type AWeberBroadcastCollection = {
-	entries: AWeberBroadcast[]
-	next_collection_link: URL | string | null
-	prev_collection_link: URL | string | null
-	resource_type_link: URL | string
-	total_size: number
-	total_size_link: URL | string
-}
-
 export type AWeberBroadcastTotal = {
 	total_size: number
 }

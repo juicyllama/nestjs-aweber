@@ -5,6 +5,7 @@ import { AccountsModule } from './accounts/accounts.module'
 import { AuthModule } from './auth/auth.module'
 import { BroadcastsModule } from './broadcasts/broadcasts.module'
 import { CampaignsModule } from './campaigns/campaigns.module'
+import { CustomFieldsModule } from './customFields/customFields.module'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 
@@ -19,6 +20,7 @@ import { Module } from '@nestjs/common'
 		AccountsModule,
 		BroadcastsModule,
 		CampaignsModule,
+		CustomFieldsModule,
 	],
 })
 export class AWeberModule {}

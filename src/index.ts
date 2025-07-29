@@ -6,6 +6,7 @@ export { AuthService } from './aweber/auth/auth.service'
 export { AccountsService } from './aweber/accounts/accounts.service'
 export { BroadcastsService } from './aweber/broadcasts/broadcasts.service'
 export { CampaignsService } from './aweber/campaigns/campaigns.service'
+export { CustomFieldsService } from './aweber/customFields/customFields.service'
 
 //Config
 export { AWeberConfigDto } from './config/config.dto'
@@ -17,7 +18,6 @@ export { AWeberOAuthInterface } from './aweber/auth/auth.interface'
 export { AWeberAccount } from './aweber/accounts/accounts.types'
 export {
 	AWeberBroadcast,
-	AWeberBroadcastCollection,
 	AWeberBroadcastTotal,
 	AWeberBroadcastScheduleResponse,
 	AWeberBroadcastCancelResponse,
@@ -27,13 +27,12 @@ export {
 } from './aweber/broadcasts/broadcasts.types'
 export {
 	AWeberCampaign,
-	AWeberCampaignCollection,
-	AWeberCampaignStats,
 	AWeberCampaignStatistic,
 	CampaignType,
 	CampaignContentType,
 	CampaignStatsId,
 } from './aweber/campaigns/campaigns.types'
+export { AWeberCustomField } from './aweber/customFields/customFields.types'
 
 //DTOs
 export { AWeberAccountQuery } from './aweber/accounts/accounts.dto'
@@ -51,3 +50,8 @@ export {
 	AWeberFindCampaignsQuery,
 	AWeberCampaignStatsQuery,
 } from './aweber/campaigns/campaigns.dto'
+export {
+	AWeberCustomFieldQuery,
+	AWeberCreateCustomFieldDto,
+	AWeberUpdateCustomFieldDto,
+} from './aweber/customFields/customFields.dto'

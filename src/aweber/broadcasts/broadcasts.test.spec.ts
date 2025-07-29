@@ -26,11 +26,10 @@ describe('Broadcasts', () => {
 		it('should get broadcasts for a list', async () => {
 			const broadcasts = await broadcastsService.getBroadcasts(123, 456, { status: 'sent' })
 			expect(broadcasts).toBeDefined()
-			expect(broadcasts.entries).toBeDefined()
-			expect(broadcasts.entries.length).toBeGreaterThan(0)
-			expect(broadcasts.entries[0].broadcast_id).toBeDefined()
-			expect(broadcasts.entries[0].subject).toBeDefined()
-			expect(broadcasts.entries[0].status).toBeDefined()
+			expect(broadcasts.length).toBeGreaterThan(0)
+			expect(broadcasts[0].broadcast_id).toBeDefined()
+			expect(broadcasts[0].subject).toBeDefined()
+			expect(broadcasts[0].status).toBeDefined()
 		})
 
 		it('should get total broadcasts for a list', async () => {
