@@ -7,6 +7,7 @@ import { BroadcastsModule } from './broadcasts/broadcasts.module'
 import { CampaignsModule } from './campaigns/campaigns.module'
 import { CustomFieldsModule } from './customFields/customFields.module'
 import { IntegrationsModule } from './integrations/integrations.module'
+import { LandingPagesModule } from './landingPages/landingPages.module'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 
@@ -23,6 +24,7 @@ import { Module } from '@nestjs/common'
 		CampaignsModule,
 		CustomFieldsModule,
 		IntegrationsModule,
+		LandingPagesModule,
 	],
 })
 export class AWeberModule {}
