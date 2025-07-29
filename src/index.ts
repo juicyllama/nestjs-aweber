@@ -10,6 +10,7 @@ export { CustomFieldsService } from './aweber/customFields/customFields.service'
 export { IntegrationsService } from './aweber/integrations/integrations.service'
 export { LandingPagesService } from './aweber/landingPages/landingPages.service'
 export { ListsService } from './aweber/lists/lists.service'
+export { SegmentsService } from './aweber/segments/segments.service'
 
 //Config
 export { AWeberConfigDto } from './config/config.dto'
@@ -39,6 +40,7 @@ export { AWeberCustomField } from './aweber/customFields/customFields.types'
 export { AWeberIntegration } from './aweber/integrations/integrations.types'
 export { AWeberLandingPage, LandingPageStatus } from './aweber/landingPages/landingPages.types'
 export { AWeberList, AWeberListTags } from './aweber/lists/lists.types'
+export { AWeberSegment } from './aweber/segments/segments.types'
 
 //DTOs
 export { AWeberAccountQuery } from './aweber/accounts/accounts.dto'
@@ -64,3 +66,4 @@ export {
 export { AWeberIntegrationsQuery } from './aweber/integrations/integrations.dto'
 export { AWeberLandingPageQuery, AWeberLandingPageParams } from './aweber/landingPages/landingPages.dto'
 export { AWeberListQuery, AWeberFindListQuery } from './aweber/lists/lists.dto'
+export { AWeberSegmentsQuery } from './aweber/segments/segments.dto'
