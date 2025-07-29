@@ -9,6 +9,7 @@ import { CustomFieldsModule } from './customFields/customFields.module'
 import { IntegrationsModule } from './integrations/integrations.module'
 import { LandingPagesModule } from './landingPages/landingPages.module'
 import { ListsModule } from './lists/lists.module'
+import { SegmentsModule } from './segments/segments.module'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 
@@ -27,6 +28,7 @@ import { Module } from '@nestjs/common'
 		IntegrationsModule,
 		LandingPagesModule,
 		ListsModule,
+		SegmentsModule,
 	],
 })
 export class AWeberModule {}
