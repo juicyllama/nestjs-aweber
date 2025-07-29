@@ -5,6 +5,7 @@ export { AWeberModule } from './aweber/aweber.module'
 export { AuthService } from './aweber/auth/auth.service'
 export { AccountsService } from './aweber/accounts/accounts.service'
 export { BroadcastsService } from './aweber/broadcasts/broadcasts.service'
+export { CampaignsService } from './aweber/campaigns/campaigns.service'
 
 //Config
 export { AWeberConfigDto } from './config/config.dto'
@@ -24,6 +25,15 @@ export {
 	AWeberBroadcastClick,
 	BroadcastStatus,
 } from './aweber/broadcasts/broadcasts.types'
+export {
+	AWeberCampaign,
+	AWeberCampaignCollection,
+	AWeberCampaignStats,
+	AWeberCampaignStatistic,
+	CampaignType,
+	CampaignContentType,
+	CampaignStatsId,
+} from './aweber/campaigns/campaigns.types'
 
 //DTOs
 export { AWeberAccountQuery } from './aweber/accounts/accounts.dto'
@@ -36,3 +46,8 @@ export {
 	AWeberBroadcastOpensQuery,
 	AWeberBroadcastClicksQuery,
 } from './aweber/broadcasts/broadcasts.dto'
+export {
+	AWeberCampaignQuery,
+	AWeberFindCampaignsQuery,
+	AWeberCampaignStatsQuery,
+} from './aweber/campaigns/campaigns.dto'

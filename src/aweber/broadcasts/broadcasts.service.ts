@@ -15,8 +15,8 @@ import {
 	broadcastTotalMock,
 	scheduleBroadcastMock,
 	cancelBroadcastMock,
-    broadcastClickMock,
-    broadcastOpenMock,
+	broadcastClickMock,
+	broadcastOpenMock,
 } from './broadcasts.mocks'
 import {
 	AWeberBroadcast,

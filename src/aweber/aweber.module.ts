@@ -4,6 +4,7 @@ import { ConfigValidationModule } from '../config/config.module'
 import { AccountsModule } from './accounts/accounts.module'
 import { AuthModule } from './auth/auth.module'
 import { BroadcastsModule } from './broadcasts/broadcasts.module'
+import { CampaignsModule } from './campaigns/campaigns.module'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 
@@ -17,6 +18,7 @@ import { Module } from '@nestjs/common'
 		LocalCacheModule,
 		AccountsModule,
 		BroadcastsModule,
+		CampaignsModule,
 	],
 })
 export class AWeberModule {}
