@@ -3,7 +3,7 @@ import { Transform } from 'class-transformer'
 import { IsString, IsOptional, IsBoolean, IsNumber, IsEnum, IsArray, IsDateString } from 'class-validator'
 
 export class AWeberBroadcastQuery {
-	@IsEnum(['draft', 'scheduled', 'sent'])
+	@IsEnum(['draft', 'scheduled', 'sent', 'admin_hold', 'sending'])
 	status!: BroadcastStatus
 
 	@IsNumber()

@@ -1,4 +1,4 @@
-import { AWeberBroadcast } from './broadcasts.types'
+import { AWeberBroadcastClick, AWeberBroadcastOpen, AWeberBroadcast } from './broadcasts.types'
 
 export const broadcastMock: AWeberBroadcast = {
 	archive_url: 'http://archive.aweber.com/awlist12345/9198b',
@@ -71,14 +71,14 @@ export const cancelBroadcastMock = {
 	self_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/3456789',
 }
 
-export const broadcastClickMock = {
+export const broadcastClickMock: AWeberBroadcastClick = {
     event_time: '2020-09-04T18:33:34+00:00',
     subscriber_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789',
     link_url: 'https://example.com/clicked-link',
     email: 'subscriber@example.com',
 }
 
-export const broadcastOpenMock = {
+export const broadcastOpenMock: AWeberBroadcastOpen = {
     event_time: '2020-09-04T18:33:34+00:00',
 	subscriber_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789',
 	email: 'subscriber@example.com',
