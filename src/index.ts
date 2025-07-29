@@ -7,6 +7,7 @@ export { AccountsService } from './aweber/accounts/accounts.service'
 export { BroadcastsService } from './aweber/broadcasts/broadcasts.service'
 export { CampaignsService } from './aweber/campaigns/campaigns.service'
 export { CustomFieldsService } from './aweber/customFields/customFields.service'
+export { IntegrationsService } from './aweber/integrations/integrations.service'
 
 //Config
 export { AWeberConfigDto } from './config/config.dto'
@@ -33,6 +34,7 @@ export {
 	CampaignStatsId,
 } from './aweber/campaigns/campaigns.types'
 export { AWeberCustomField } from './aweber/customFields/customFields.types'
+export { AWeberIntegration } from './aweber/integrations/integrations.types'
 
 //DTOs
 export { AWeberAccountQuery } from './aweber/accounts/accounts.dto'
@@ -55,3 +57,4 @@ export {
 	AWeberCreateCustomFieldDto,
 	AWeberUpdateCustomFieldDto,
 } from './aweber/customFields/customFields.dto'
+export { AWeberIntegrationsQuery } from './aweber/integrations/integrations.dto'
