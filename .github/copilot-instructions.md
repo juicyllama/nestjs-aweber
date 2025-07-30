@@ -11,3 +11,7 @@ This project is an abstracted NestJS module designed to simplify the integration
 
 - Always use NestJS documentation for guidance on module creation and service injection.
 - Ensure that the AWeber OAuth credentials are securely stored and accessed through environment variables.
+
+## Github
+
+- Please use the github CLI for all git operations.
