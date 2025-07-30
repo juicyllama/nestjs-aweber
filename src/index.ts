@@ -12,6 +12,7 @@ export { LandingPagesService } from './aweber/landingPages/landingPages.service'
 export { ListsService } from './aweber/lists/lists.service'
 export { SegmentsService } from './aweber/segments/segments.service'
 export { SubscribersService } from './aweber/subscribers/subscribers.service'
+export { WebformsService } from './aweber/webforms/webforms.service'
 
 //Config
 export { AWeberConfigDto } from './config/config.dto'
@@ -55,6 +56,12 @@ export {
 	AWeberSortOrder,
 	AWeberSubscriberActivityType,
 } from './aweber/subscribers/subscribers.types'
+export {
+	AWeberWebform,
+	AWeberWebformSplitTest,
+	AWeberWebformSplitTestComponent,
+	WebformType,
+} from './aweber/webforms/webforms.types'
 
 //DTOs
 export { AWeberAccountQuery } from './aweber/accounts/accounts.dto'
@@ -91,3 +98,10 @@ export {
 	AWeberMoveSubscriberDto,
 	AWeberCreatePurchaseDto,
 } from './aweber/subscribers/subscribers.dto'
+export {
+	AWeberWebformsForAccountQuery,
+	AWeberWebformSplitTestsForAccountQuery,
+	AWeberWebformsQuery,
+	AWeberWebformSplitTestsQuery,
+	AWeberWebformSplitTestComponentsQuery,
+} from './aweber/webforms/webforms.dto'
