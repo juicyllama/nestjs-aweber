@@ -1,7 +1,7 @@
 import { SandboxService } from './sandbox.service'
 import { Controller, Get } from '@nestjs/common'
 
-@Controller('/app/aweber/sandbox')
+@Controller()
 export class SandboxController {
 	constructor(private readonly sandboxService: SandboxService) {}
 
