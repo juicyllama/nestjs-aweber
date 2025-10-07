@@ -109,6 +109,19 @@ export class AWeberModule {
 			module: AWeberModule,
 			imports,
 			providers,
+			exports: [
+				AuthModule,
+				AccountsModule,
+				BroadcastsModule,
+				CampaignsModule,
+				CustomFieldsModule,
+				IntegrationsModule,
+				LandingPagesModule,
+				ListsModule,
+				SegmentsModule,
+				SubscribersModule,
+				WebformsModule,
+			],
 		}
 	}
 
@@ -216,6 +229,19 @@ export class AWeberModule {
 			module: AWeberModule,
 			imports,
 			providers,
+			exports: [
+				AuthModule,
+				AccountsModule,
+				BroadcastsModule,
+				CampaignsModule,
+				CustomFieldsModule,
+				IntegrationsModule,
+				LandingPagesModule,
+				ListsModule,
+				SegmentsModule,
+				SubscribersModule,
+				WebformsModule,
+			],
 		}
 	}
 
