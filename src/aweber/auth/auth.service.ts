@@ -3,7 +3,7 @@ import { AWeberConfigDto } from '../../config/config.dto'
 import { InjectConfig } from '../../config/config.provider'
 import { AWEBER_OAUTH_URL, AWEBER_TOKEN_URL, OAUTH_CACHE_KEY } from './auth.constants'
 import { AWeberOAuthInterface } from './auth.interface'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 interface TokenResponse {
 	access_token: string
@@ -15,8 +15,6 @@ interface TokenResponse {
 
 @Injectable()
 export class AuthService {
-	private readonly logger = new Logger(AuthService.name)
-
 	constructor(
 		@InjectConfig(AWeberConfigDto) private readonly config: AWeberConfigDto,
 		private readonly localConfigService: LocalCacheService,
@@ -33,20 +31,12 @@ export class AuthService {
 			const bufferTime = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 			if (expiresAt.getTime() > now.getTime() + bufferTime) {
-				this.logger.debug('Using cached access token')
 				return cachedOAuth.access_token
 			}
 
-			// Token is expired, refresh it
-			this.logger.debug('Access token expired, refreshing...')
-			try {
-				const tokenResponse = await this.refreshAccessToken(cachedOAuth.refresh_token)
-				const newOAuth = await this.saveTokenResponse(tokenResponse)
-				return newOAuth.access_token
-			} catch (error) {
-				this.logger.error('Failed to refresh token:', error)
-				throw new Error('Failed to refresh AWeber access token')
-			}
+			const tokenResponse = await this.refreshAccessToken(cachedOAuth.refresh_token)
+			const newOAuth = await this.saveTokenResponse(tokenResponse)
+			return newOAuth.access_token
 		}
 
 		throw new Error('No valid AWeber tokens found. Please authorize the application first.')
@@ -92,11 +82,10 @@ export class AuthService {
 			})
 			const oauth = await this.saveTokenResponse(tokenResponse)
 
-			this.logger.debug('Successfully exchanged authorization code for tokens', oauth)
 			return oauth.access_token
 		} catch (error) {
-			this.logger.error('Failed to exchange authorization code:', error)
-			throw new Error('Failed to exchange authorization code for AWeber access token')
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+			throw new Error('Failed to exchange authorization code for AWeber access token: ' + errorMessage)
 		}
 	}
 
@@ -129,8 +118,7 @@ export class AuthService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Token request failed: ${response.status} - ${errorText}`)
-			throw new Error(`Token request failed: ${response.status}`)
+			throw new Error(`Token request failed: ${response.status} -  ${errorText}`)
 		}
 
 		const tokenResponse = (await response.json()) as TokenResponse
@@ -162,6 +150,5 @@ export class AuthService {
 	 */
 	async clearTokens(): Promise<void> {
 		await this.localConfigService.del(OAUTH_CACHE_KEY)
-		this.logger.debug('Cleared cached AWeber tokens')
 	}
 }

@@ -3,12 +3,10 @@ import { AuthService } from '../auth/auth.service'
 import { AWeberCustomFieldQuery, AWeberCreateCustomFieldDto, AWeberUpdateCustomFieldDto } from './customFields.dto'
 import { customFieldMock } from './customFields.mocks'
 import { AWeberCustomField } from './customFields.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class CustomFieldsService {
-	private readonly logger = new Logger(CustomFieldsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -40,8 +38,7 @@ export class CustomFieldsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Custom Fields API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Custom Fields API Call failed: ${response.status}`)
+			throw new Error(`Get Custom Fields API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberCustomField[] }
@@ -73,8 +70,7 @@ export class CustomFieldsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Create Custom Field API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Create Custom Field API Call failed: ${response.status}`)
+			throw new Error(`Create Custom Field API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberCustomField
@@ -103,8 +99,7 @@ export class CustomFieldsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Custom Field API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Custom Field API Call failed: ${response.status}`)
+			throw new Error(`Get Custom Field API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberCustomField
@@ -139,8 +134,7 @@ export class CustomFieldsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Update Custom Field API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Update Custom Field API Call failed: ${response.status}`)
+			throw new Error(`Update Custom Field API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberCustomField
@@ -169,8 +163,7 @@ export class CustomFieldsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Delete Custom Field API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Delete Custom Field API Call failed: ${response.status}`)
+			throw new Error(`Delete Custom Field API Call failed: ${response.status} - ${errorText}`)
 		}
 	}
 }

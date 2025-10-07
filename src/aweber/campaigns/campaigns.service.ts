@@ -3,12 +3,10 @@ import { AuthService } from '../auth/auth.service'
 import { AWeberCampaignQuery, AWeberFindCampaignsQuery, AWeberCampaignStatsQuery } from './campaigns.dto'
 import { campaignMock, campaignStatisticMock } from './campaigns.mocks'
 import { AWeberCampaign, AWeberCampaignStatistic, AWeberCampaignType, AWeberCampaignStatsId } from './campaigns.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class CampaignsService {
-	private readonly logger = new Logger(CampaignsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -36,8 +34,7 @@ export class CampaignsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Campaigns API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Campaigns API Call failed: ${response.status}`)
+			throw new Error(`Get Campaigns API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberCampaign[] }
@@ -72,8 +69,7 @@ export class CampaignsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Campaign API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Campaign API Call failed: ${response.status}`)
+			throw new Error(`Get Campaign API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberCampaign
@@ -109,8 +105,7 @@ export class CampaignsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Find Campaigns API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Find Campaigns API Call failed: ${response.status}`)
+			throw new Error(`Find Campaigns API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberCampaign[] }
@@ -147,8 +142,7 @@ export class CampaignsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Broadcast Statistics API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Broadcast Statistics API Call failed: ${response.status}`)
+			throw new Error(`Get Broadcast Statistics API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberCampaignStatistic[] }
@@ -183,8 +177,7 @@ export class CampaignsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Broadcast Statistic API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Broadcast Statistic API Call failed: ${response.status}`)
+			throw new Error(`Get Broadcast Statistic API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberCampaignStatistic

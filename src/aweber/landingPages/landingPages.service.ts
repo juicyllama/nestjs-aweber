@@ -3,12 +3,10 @@ import { AuthService } from '../auth/auth.service'
 import { AWeberLandingPageQuery } from './landingPages.dto'
 import { landingPageMock } from './landingPages.mocks'
 import { AWeberLandingPage } from './landingPages.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class LandingPagesService {
-	private readonly logger = new Logger(LandingPagesService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -40,8 +38,7 @@ export class LandingPagesService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Landing Pages API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Landing Pages API Call failed: ${response.status}`)
+			throw new Error(`Get Landing Pages API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberLandingPage[] }
@@ -71,8 +68,7 @@ export class LandingPagesService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Landing Page API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Landing Page API Call failed: ${response.status}`)
+			throw new Error(`Get Landing Page API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberLandingPage

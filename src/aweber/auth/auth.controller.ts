@@ -1,13 +1,11 @@
 import { LocalCacheService } from '../../config/cache/local.cache.service'
 import { AUTH_REDIRECT_URI, OAUTH_CACHE_KEY } from './auth.constants'
 import { AuthService } from './auth.service'
-import { Controller, Get, Req, Res, Logger, UnauthorizedException } from '@nestjs/common'
+import { Controller, Get, Req, Res, UnauthorizedException } from '@nestjs/common'
 import { Request, Response } from 'express'
 
 @Controller('/app/aweber/auth')
 export class AuthController {
-	private readonly logger = new Logger()
-
 	constructor(
 		private readonly localConfigService: LocalCacheService,
 		private readonly authService: AuthService,
@@ -28,8 +26,6 @@ export class AuthController {
 
 	@Get('/callback')
 	async callback(@Req() req: Request, @Res() res: Response): Promise<void> {
-		this.logger.log('AWeber OAuth callback received:', req.query)
-
 		const { code } = req.query as { code?: string }
 
 		if (!code) {

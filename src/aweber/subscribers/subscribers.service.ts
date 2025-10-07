@@ -24,12 +24,10 @@ import {
 	AWeberMoveSubscriberResponse,
 	AWeberCreatePurchaseResponse,
 } from './subscribers.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class SubscribersService {
-	private readonly logger = new Logger(SubscribersService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -61,8 +59,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Subscribers API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Subscribers API Call failed: ${response.status}`)
+			throw new Error(`Get Subscribers API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberSubscriber[] }
@@ -100,8 +97,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Subscribers Total API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Subscribers Total API Call failed: ${response.status}`)
+			throw new Error(`Get Subscribers Total API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as AWeberSubscriberTotal
@@ -130,8 +126,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Subscriber API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Subscriber API Call failed: ${response.status}`)
+			throw new Error(`Get Subscriber API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberSubscriber
@@ -183,8 +178,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Create Subscriber API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Create Subscriber API Call failed: ${response.status}`)
+			throw new Error(`Create Subscriber API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberSubscriber
@@ -234,8 +228,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Update Subscriber API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Update Subscriber API Call failed: ${response.status}`)
+			throw new Error(`Update Subscriber API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberSubscriber
@@ -262,8 +255,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Delete Subscriber API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Delete Subscriber API Call failed: ${response.status}`)
+			throw new Error(`Delete Subscriber API Call failed: ${response.status} - ${errorText}`)
 		}
 	}
 
@@ -297,8 +289,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Subscriber Activity API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Subscriber Activity API Call failed: ${response.status}`)
+			throw new Error(`Get Subscriber Activity API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberSubscriberActivity[] }
@@ -340,8 +331,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Move Subscriber API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Move Subscriber API Call failed: ${response.status}`)
+			throw new Error(`Move Subscriber API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberMoveSubscriberResponse
@@ -383,8 +373,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Create Purchase API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Create Purchase API Call failed: ${response.status}`)
+			throw new Error(`Create Purchase API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberCreatePurchaseResponse
@@ -440,8 +429,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Update Subscriber By Email API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Update Subscriber By Email API Call failed: ${response.status}`)
+			throw new Error(`Update Subscriber By Email API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberSubscriber
@@ -468,8 +456,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Delete Subscriber By Email API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Delete Subscriber By Email API Call failed: ${response.status}`)
+			throw new Error(`Delete Subscriber By Email API Call failed: ${response.status} - ${errorText}`)
 		}
 	}
 
@@ -508,8 +495,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Find Subscribers For List API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Find Subscribers For List API Call failed: ${response.status}`)
+			throw new Error(`Find Subscribers For List API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberSubscriber[] }
@@ -547,8 +533,7 @@ export class SubscribersService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Find Subscribers For Account API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Find Subscribers For Account API Call failed: ${response.status}`)
+			throw new Error(`Find Subscribers For Account API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberSubscriber[] }

@@ -3,12 +3,10 @@ import { AuthService } from '../auth/auth.service'
 import { AWeberListQuery, AWeberFindListQuery } from './lists.dto'
 import { listMock, listTagsMock } from './lists.mocks'
 import { AWeberList, AWeberListTags } from './lists.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class ListsService {
-	private readonly logger = new Logger(ListsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -26,8 +24,6 @@ export class ListsService {
 			url += '?' + new URLSearchParams(params as unknown as Record<string, string>).toString()
 		}
 
-		this.logger.debug(`Getting lists from: ${url}`)
-
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {
@@ -38,8 +34,7 @@ export class ListsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Failed to get lists: ${response.status} ${response.statusText} - ${errorText}`)
-			throw new Error(`Failed to get lists: ${response.status} ${response.statusText}`)
+			throw new Error(`Failed to get lists: ${response.status} ${response.statusText} - ${errorText}`)
 		}
 
 		const data = (await response.json()) as { entries?: AWeberList[] }
@@ -58,8 +53,6 @@ export class ListsService {
 
 		const url = `${AWEBER_API_BASE_URL}/accounts/${accountId}/lists/${listId}`
 
-		this.logger.debug(`Getting list from: ${url}`)
-
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {
@@ -70,8 +63,7 @@ export class ListsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Failed to get list: ${response.status} ${response.statusText} - ${errorText}`)
-			throw new Error(`Failed to get list: ${response.status} ${response.statusText}`)
+			throw new Error(`Failed to get list: ${response.status} ${response.statusText} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberList
@@ -91,8 +83,6 @@ export class ListsService {
 			`${AWEBER_API_BASE_URL}/accounts/${accountId}/lists?` +
 			new URLSearchParams(params as unknown as Record<string, string>).toString()
 
-		this.logger.debug(`Finding lists from: ${url}`)
-
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {
@@ -103,8 +93,7 @@ export class ListsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Failed to find lists: ${response.status} ${response.statusText} - ${errorText}`)
-			throw new Error(`Failed to find lists: ${response.status} ${response.statusText}`)
+			throw new Error(`Failed to find lists: ${response.status} ${response.statusText} - ${errorText}`)
 		}
 
 		const data = (await response.json()) as { entries?: AWeberList[] }
@@ -123,8 +112,6 @@ export class ListsService {
 
 		const url = `${AWEBER_API_BASE_URL}/accounts/${accountId}/lists/${listId}/tags`
 
-		this.logger.debug(`Getting list tags from: ${url}`)
-
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {
@@ -135,8 +122,7 @@ export class ListsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Failed to get list tags: ${response.status} ${response.statusText} - ${errorText}`)
-			throw new Error(`Failed to get list tags: ${response.status} ${response.statusText}`)
+			throw new Error(`Failed to get list tags: ${response.status} ${response.statusText} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberListTags

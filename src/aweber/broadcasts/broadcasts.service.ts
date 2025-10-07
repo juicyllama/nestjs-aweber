@@ -25,12 +25,10 @@ import {
 	AWeberBroadcastOpen,
 	AWeberBroadcastClick,
 } from './broadcasts.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class BroadcastsService {
-	private readonly logger = new Logger(BroadcastsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -58,8 +56,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Broadcasts API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Broadcasts API Call failed: ${response.status}`)
+			throw new Error(`Get Broadcasts API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberBroadcast[] }
@@ -97,8 +94,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Create Broadcast API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Create Broadcast API Call failed: ${response.status}`)
+			throw new Error(`Create Broadcast API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberBroadcast
@@ -127,8 +123,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Broadcast API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Broadcast API Call failed: ${response.status}`)
+			throw new Error(`Get Broadcast API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberBroadcast
@@ -173,8 +168,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Update Broadcast API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Update Broadcast API Call failed: ${response.status}`)
+			throw new Error(`Update Broadcast API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberBroadcast
@@ -203,8 +197,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Delete Broadcast API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Delete Broadcast API Call failed: ${response.status}`)
+			throw new Error(`Delete Broadcast API Call failed: ${response.status} - ${errorText}`)
 		}
 	}
 
@@ -240,8 +233,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Schedule Broadcast API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Schedule Broadcast API Call failed: ${response.status}`)
+			throw new Error(`Schedule Broadcast API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberBroadcastScheduleResponse
@@ -274,8 +266,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Cancel Broadcast API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Cancel Broadcast API Call failed: ${response.status}`)
+			throw new Error(`Cancel Broadcast API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberBroadcastCancelResponse
@@ -310,8 +301,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Total Broadcasts API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Total Broadcasts API Call failed: ${response.status}`)
+			throw new Error(`Get Total Broadcasts API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberBroadcastTotal
@@ -347,8 +337,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Broadcast Opens API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Broadcast Opens API Call failed: ${response.status}`)
+			throw new Error(`Get Broadcast Opens API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberBroadcastOpen[] }
@@ -385,8 +374,7 @@ export class BroadcastsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Broadcast Clicks API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Broadcast Clicks API Call failed: ${response.status}`)
+			throw new Error(`Get Broadcast Clicks API Call failed: ${response.status} - ${errorText} `)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberBroadcastClick[] }

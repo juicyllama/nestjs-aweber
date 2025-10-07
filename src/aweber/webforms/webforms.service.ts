@@ -9,12 +9,10 @@ import {
 } from './webforms.dto'
 import { webformMock, webformSplitTestMock, webformSplitTestComponentMock } from './webforms.mocks'
 import { AWeberWebform, AWeberWebformSplitTest, AWeberWebformSplitTestComponent } from './webforms.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class WebformsService {
-	private readonly logger = new Logger(WebformsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -42,8 +40,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webforms For Account API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webforms For Account API Call failed: ${response.status}`)
+			throw new Error(`Get Webforms For Account API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberWebform[] }
@@ -78,8 +75,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webform Split Tests For Account API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webform Split Tests For Account API Call failed: ${response.status}`)
+			throw new Error(`Get Webform Split Tests For Account API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberWebformSplitTest[] }
@@ -115,8 +111,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webforms For List API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webforms For List API Call failed: ${response.status}`)
+			throw new Error(`Get Webforms For List API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberWebform[] }
@@ -146,8 +141,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webform For List API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webform For List API Call failed: ${response.status}`)
+			throw new Error(`Get Webform For List API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberWebform
@@ -182,8 +176,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webform Split Tests For List API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webform Split Tests For List API Call failed: ${response.status}`)
+			throw new Error(`Get Webform Split Tests For List API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberWebformSplitTest[] }
@@ -217,8 +210,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webform Split Test For List API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webform Split Test For List API Call failed: ${response.status}`)
+			throw new Error(`Get Webform Split Test For List API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberWebformSplitTest
@@ -254,8 +246,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webform Split Test Components API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webform Split Test Components API Call failed: ${response.status}`)
+			throw new Error(`Get Webform Split Test Components API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberWebformSplitTestComponent[] }
@@ -290,8 +281,7 @@ export class WebformsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Webform Split Test Component API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Webform Split Test Component API Call failed: ${response.status}`)
+			throw new Error(`Get Webform Split Test Component API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberWebformSplitTestComponent

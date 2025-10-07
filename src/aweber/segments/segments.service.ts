@@ -3,12 +3,10 @@ import { AuthService } from '../auth/auth.service'
 import { AWeberSegmentsQuery } from './segments.dto'
 import { segmentMock, segmentsMock } from './segments.mocks'
 import { AWeberSegment } from './segments.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class SegmentsService {
-	private readonly logger = new Logger(SegmentsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -36,8 +34,7 @@ export class SegmentsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Segments API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Segments API Call failed: ${response.status}`)
+			throw new Error(`Get Segments API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberSegment[] }
@@ -67,8 +64,7 @@ export class SegmentsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Segment API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Segment API Call failed: ${response.status}`)
+			throw new Error(`Get Segment API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberSegment

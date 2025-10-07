@@ -3,12 +3,10 @@ import { AuthService } from '../auth/auth.service'
 import { AWeberIntegrationsQuery } from './integrations.dto'
 import { integrationMock } from './integrations.mocks'
 import { AWeberIntegration } from './integrations.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class IntegrationsService {
-	private readonly logger = new Logger(IntegrationsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	/**
@@ -36,8 +34,7 @@ export class IntegrationsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Failed to get integrations: ${response.status} ${response.statusText} - ${errorText}`)
-			throw new Error(`Failed to get integrations: ${response.status} ${response.statusText}`)
+			throw new Error(`Failed to get integrations: ${response.status} ${response.statusText} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberIntegration[] }
@@ -66,13 +63,10 @@ export class IntegrationsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Failed to get integration: ${response.status} ${response.statusText} - ${errorText}`)
-			throw new Error(`Failed to get integration: ${response.status} ${response.statusText}`)
+			throw new Error(`Failed to get integration: ${response.status} ${response.statusText} - ${errorText}`)
 		}
 
 		const data = (await response.json()) as AWeberIntegration
-		this.logger.log(`Successfully retrieved integration ${integrationId} for account ${accountId}`)
-
 		return data
 	}
 }

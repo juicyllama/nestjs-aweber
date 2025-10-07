@@ -3,12 +3,10 @@ import { AuthService } from '../auth/auth.service'
 import { AWeberAccountQuery } from './accounts.dto'
 import { accountMock } from './accounts.mocks'
 import { AWeberAccount } from './accounts.types'
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class AccountsService {
-	private readonly logger = new Logger(AccountsService.name)
-
 	constructor(private readonly authService: AuthService) {}
 
 	async getAccounts(params?: AWeberAccountQuery): Promise<AWeberAccount[]> {
@@ -34,8 +32,7 @@ export class AccountsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Accounts API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Accounts API Call failed: ${response.status}`)
+			throw new Error(`Get Accounts API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		const responseData = (await response.json()) as { entries: AWeberAccount[] }
@@ -60,8 +57,7 @@ export class AccountsService {
 
 		if (!response.ok) {
 			const errorText = await response.text()
-			this.logger.error(`Get Account #${accountId} API Call failed: ${response.status} - ${errorText}`)
-			throw new Error(`Get Account #${accountId} API Call failed: ${response.status}`)
+			throw new Error(`Get Account #${accountId} API Call failed: ${response.status} - ${errorText}`)
 		}
 
 		return (await response.json()) as AWeberAccount
