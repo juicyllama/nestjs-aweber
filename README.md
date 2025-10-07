@@ -39,6 +39,14 @@ npm i @juicyllama/nestjs-aweber
 ## Usage
 
 1. Create an AWeber App (or get credentials from existing app)
+
+```
+// .env
+
+AWEBER_CLIENT_ID=
+AWEBER_CLIENT_SECRET=
+```
+
 2. Authenticate your NestJS application with AWeber (#Oauth2)
 3. Integrate your NestJS application with the relevant modules (e.g. endpoints) required
 
@@ -57,8 +65,7 @@ As standard the app will use local memory for storing the OAuth Tokens which is 
 We recommend using Redis which ships out of the box, provide your redis environment values and the cache will revert to redis.
 
 ```bash
-REDIS_PORT=localhost
-REDIS_HOST=6379
+REDIS_URI=redis://localhost:6379
 ```
 
 ## Types

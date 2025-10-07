@@ -22,9 +22,8 @@ export class LocalCacheService implements OnApplicationShutdown {
 	}
 
 	public useRedis(): boolean {
-		const redisPort = this.configService.get<string>('REDIS_PORT')
-		const redisHost = this.configService.get<string>('REDIS_HOST')
-		return !!(redisPort && redisHost)
+		const redisUri = this.configService.get<string>('REDIS_URI')
+		return !!redisUri
 	}
 
 	/**

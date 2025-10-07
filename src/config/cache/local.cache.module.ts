@@ -6,12 +6,8 @@ import { Module } from '@nestjs/common'
 import Redis from 'ioredis'
 
 function createRedisCache() {
-	if (process.env.REDIS_PORT && process.env.REDIS_HOST) {
-		return new Redis(+process.env.REDIS_PORT, process.env.REDIS_HOST, {
-			username: process.env.REDIS_USER ?? undefined,
-			password: process.env.REDIS_PASS ?? undefined,
-			db: process.env.REDIS_DB ? Number(process.env.REDIS_DB) : 0,
-		})
+	if (process.env.REDIS_URI) {
+		return new Redis(process.env.REDIS_URI)
 	}
 }
 

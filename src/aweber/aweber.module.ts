@@ -14,9 +14,13 @@ import { SubscribersModule } from './subscribers/subscribers.module'
 import { WebformsModule } from './webforms/webforms.module'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
 	imports: [
+		ConfigModule.forRoot({
+			isGlobal: true,
+		}),
 		CacheModule.register({
 			isGlobal: true,
 		}),
