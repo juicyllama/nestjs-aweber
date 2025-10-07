@@ -11,7 +11,7 @@ export class SandboxService {
 		private readonly authService: AuthService,
 	) {}
 
-	async run(): Promise<any> {
+	async run(): Promise<{ message: string }> {
 		this.logger.log('Running sandbox service...')
 		const accessToken = await this.authService.accessToken()
 		this.logger.log('Access Token:', accessToken)

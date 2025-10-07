@@ -61,6 +61,26 @@ import { AWeberModule } from '@juicyllama/nestjs-aweber'
 export class AppModule {}
 ```
 
+### Direct Configuration
+
+For applications that want to pass configuration values directly:
+
+```typescript
+import { AWeberModule } from '@juicyllama/nestjs-aweber'
+
+@Module({
+  imports: [
+    AWeberModule.forRoot({
+      config: {
+        AWEBER_CLIENT_ID: 'your-client-id',
+        AWEBER_CLIENT_SECRET: 'your-client-secret',
+      },
+    }),
+  ],
+})
+export class AppModule {}
+```
+
 ### Advanced Configuration
 
 For applications with custom environment file paths or caching strategies:

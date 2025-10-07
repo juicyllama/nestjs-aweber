@@ -1,6 +1,7 @@
 import { LocalCacheModule } from '../config/cache/local.cache.module'
 import { AWeberConfigDto } from '../config/config.dto'
 import { ConfigValidationModule } from '../config/config.module'
+import { getConfigToken } from '../config/config.provider'
 import { AccountsModule } from './accounts/accounts.module'
 import { AuthModule } from './auth/auth.module'
 import { BroadcastsModule } from './broadcasts/broadcasts.module'
@@ -15,6 +16,8 @@ import { WebformsModule } from './webforms/webforms.module'
 import { CacheModule, CacheModuleOptions } from '@nestjs/cache-manager'
 import { DynamicModule, Module, ModuleMetadata, Type } from '@nestjs/common'
 import { ConfigModule, ConfigModuleOptions } from '@nestjs/config'
+import { plainToInstance } from 'class-transformer'
+import { validate, ValidationError } from 'class-validator'
 
 export interface AWeberModuleOptions {
 	config?: AWeberConfigDto
@@ -42,6 +45,7 @@ export class AWeberModule {
 	 */
 	static forRoot(options: AWeberModuleOptions = {}): DynamicModule {
 		const imports: any[] = []
+		const providers: any[] = []
 
 		// Add ConfigModule if configModule options are provided, otherwise use default
 		if (options.configModule) {
@@ -65,8 +69,25 @@ export class AWeberModule {
 			)
 		}
 
-		// Add config validation
-		imports.push(ConfigValidationModule.register(AWeberConfigDto))
+		// Handle config validation
+		if (options.config) {
+			// If config is provided directly, validate it and provide it
+			const token = getConfigToken(AWeberConfigDto)
+			providers.push({
+				provide: token,
+				useFactory: async (): Promise<AWeberConfigDto> => {
+					const inst = plainToInstance(AWeberConfigDto, options.config)
+					const errors: ValidationError[] = await validate(inst)
+					if (errors.length) {
+						throw new Error(errors.map((e: ValidationError) => e.toString()).join('\n'))
+					}
+					return inst
+				},
+			})
+		} else {
+			// Use standard config validation from environment variables
+			imports.push(ConfigValidationModule.register(AWeberConfigDto))
+		}
 
 		// Add all AWeber feature modules
 		imports.push(
@@ -87,6 +108,7 @@ export class AWeberModule {
 		return {
 			module: AWeberModule,
 			imports,
+			providers,
 		}
 	}
 
@@ -118,9 +140,6 @@ export class AWeberModule {
 			)
 		}
 
-		// Add config validation
-		imports.push(ConfigValidationModule.register(AWeberConfigDto))
-
 		// Add all AWeber feature modules
 		imports.push(
 			AuthModule,
@@ -139,12 +158,44 @@ export class AWeberModule {
 
 		const providers: any[] = []
 
+		// Handle async configuration
 		if (options.useFactory) {
+			const optionsToken = 'AWEBER_MODULE_OPTIONS'
+			const configToken = getConfigToken(AWeberConfigDto)
+
 			providers.push({
-				provide: 'AWEBER_MODULE_OPTIONS',
+				provide: optionsToken,
 				useFactory: options.useFactory,
 				inject: options.inject || [],
 			})
+
+			providers.push({
+				provide: configToken,
+				useFactory: async (moduleOptions: AWeberModuleOptions): Promise<AWeberConfigDto> => {
+					if (moduleOptions.config) {
+						// Use provided config
+						const inst = plainToInstance(AWeberConfigDto, moduleOptions.config)
+						const errors: ValidationError[] = await validate(inst)
+						if (errors.length) {
+							throw new Error(errors.map((e: ValidationError) => e.toString()).join('\n'))
+						}
+						return inst
+					} else {
+						// Fallback to environment variables
+						await ConfigModule.envVariablesLoaded
+						const inst = plainToInstance(AWeberConfigDto, process.env)
+						const errors: ValidationError[] = await validate(inst)
+						if (errors.length) {
+							throw new Error(errors.map((e: ValidationError) => e.toString()).join('\n'))
+						}
+						return inst
+					}
+				},
+				inject: [optionsToken],
+			})
+		} else {
+			// For useClass and useExisting, we'll use the standard config validation
+			imports.push(ConfigValidationModule.register(AWeberConfigDto))
 		}
 
 		if (options.useClass) {

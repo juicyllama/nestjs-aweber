@@ -9,7 +9,7 @@ export class ConfigValidationModule {
 	/**
 	 * @param Abstracted validation using DTO class that represents the schema to validate
 	 */
-	static async register(schema: Type<object>): Promise<DynamicModule> {
+	static register(schema: Type<object>): DynamicModule {
 		const token = getConfigToken(schema)
 		return {
 			module: ConfigModule,

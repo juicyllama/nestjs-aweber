@@ -14,7 +14,7 @@ async function bootstrap() {
 }
 
 try {
-	bootstrap()
+	void bootstrap()
 } catch (err) {
 	const e = err as Error
 	console.error(`Error during bootstrap: ${e.message}`)

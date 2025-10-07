@@ -19,7 +19,27 @@ import { AWeberModule } from '@juicyllama/nestjs-aweber'
 export class AppModule {}
 ```
 
-## 2. Custom Configuration File Paths
+## 2. Direct Configuration
+
+For applications that want to pass configuration values directly without using environment variables:
+
+```typescript
+import { AWeberModule } from '@juicyllama/nestjs-aweber'
+
+@Module({
+  imports: [
+    AWeberModule.forRoot({
+      config: {
+        AWEBER_CLIENT_ID: 'your-client-id',
+        AWEBER_CLIENT_SECRET: 'your-client-secret',
+      },
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+## 3. Custom Configuration File Paths
 
 For applications that need custom environment file paths:
 
@@ -63,7 +83,7 @@ import { Logger } from '@nestjs/common'
 export class AppModule {}
 ```
 
-## 3. Custom Cache Configuration
+## 4. Custom Cache Configuration
 
 For applications that need custom cache configuration (e.g., Redis):
 
@@ -97,7 +117,32 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 export class AppModule {}
 ```
 
-## 4. Complete Async Configuration
+## 4.5. Direct Configuration with Async
+
+For applications that want to provide configuration directly through an async factory:
+
+```typescript
+import { AWeberModule } from '@juicyllama/nestjs-aweber'
+
+@Module({
+  imports: [
+    AWeberModule.forRootAsync({
+      useFactory: async () => ({
+        config: {
+          AWEBER_CLIENT_ID: 'async-client-id',
+          AWEBER_CLIENT_SECRET: 'async-client-secret',
+        },
+        cacheModule: {
+          isGlobal: true,
+        },
+      }),
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+## 5. Complete Async Configuration
 
 For complex applications that need both custom config and cache setup:
 
@@ -134,7 +179,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 export class AppModule {}
 ```
 
-## 5. Using a Factory Class
+## 6. Using a Factory Class
 
 For more complex configurations, you can use a factory class:
 

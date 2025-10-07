@@ -6,7 +6,7 @@ export class SandboxController {
 	constructor(private readonly sandboxService: SandboxService) {}
 
 	@Get()
-	async sandbox(): Promise<{ url: string }> {
+	async sandbox(): Promise<{ message: string }> {
 		return await this.sandboxService.run()
 	}
 }

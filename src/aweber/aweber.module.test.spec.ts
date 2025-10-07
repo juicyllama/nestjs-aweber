@@ -13,6 +13,22 @@ describe('AWeberModule Configuration', () => {
 		expect(module.get(AuthService)).toBeDefined()
 	})
 
+	it('should create module with forRoot() and direct config', async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			imports: [
+				AWeberModule.forRoot({
+					config: {
+						AWEBER_CLIENT_ID: 'test-client-id',
+						AWEBER_CLIENT_SECRET: 'test-client-secret',
+					},
+				}),
+			],
+		}).compile()
+
+		expect(module).toBeDefined()
+		expect(module.get(AuthService)).toBeDefined()
+	})
+
 	it('should create module with forRoot() custom options', async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			imports: [
@@ -42,12 +58,30 @@ describe('AWeberModule Configuration', () => {
 				AWeberModule.forRootAsync({
 					imports: [ConfigModule],
 					inject: [ConfigService],
-					useFactory: async () => ({
+					useFactory: () => ({
 						configModule: {
 							isGlobal: true,
 						},
 						cacheModule: {
 							isGlobal: true,
+						},
+					}),
+				}),
+			],
+		}).compile()
+
+		expect(module).toBeDefined()
+		expect(module.get(AuthService)).toBeDefined()
+	})
+
+	it('should create module with forRootAsync() and direct config', async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			imports: [
+				AWeberModule.forRootAsync({
+					useFactory: () => ({
+						config: {
+							AWEBER_CLIENT_ID: 'async-test-client-id',
+							AWEBER_CLIENT_SECRET: 'async-test-client-secret',
 						},
 					}),
 				}),
