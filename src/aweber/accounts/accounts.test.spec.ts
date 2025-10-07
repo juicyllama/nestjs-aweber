@@ -12,7 +12,7 @@ describe('Accounts', () => {
 
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
-			imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, AccountsModule],
+			imports: [AWeberModule.forRoot(), AuthModule, AccountsModule],
 		}).compile()
 
 		app = moduleRef.createNestApplication()

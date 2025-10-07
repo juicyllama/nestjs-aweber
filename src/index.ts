@@ -1,5 +1,5 @@
 //Module
-export { AWeberModule } from './aweber/aweber.module'
+export { AWeberModule, AWeberModuleOptions, AWeberModuleAsyncOptions, AWeberModuleOptionsFactory } from './aweber/aweber.module'
 
 //Service
 export { AuthService } from './aweber/auth/auth.service'

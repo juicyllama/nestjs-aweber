@@ -13,7 +13,7 @@ describe('WebformsService', () => {
 
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
-			imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, WebformsModule],
+			imports: [AWeberModule.forRoot(), AuthModule, WebformsModule],
 		}).compile()
 
 		app = moduleRef.createNestApplication()

@@ -40,15 +40,61 @@ npm i @juicyllama/nestjs-aweber
 
 1. Create an AWeber App (or get credentials from existing app)
 
+```bash
+# .env
+AWEBER_CLIENT_ID=your_aweber_client_id
+AWEBER_CLIENT_SECRET=your_aweber_client_secret
 ```
-// .env
 
-AWEBER_CLIENT_ID=
-AWEBER_CLIENT_SECRET=
+2. Import the AWeber module into your NestJS application
+
+### Basic Usage
+
+```typescript
+import { AWeberModule } from '@juicyllama/nestjs-aweber'
+
+@Module({
+  imports: [
+    AWeberModule.forRoot(),
+  ],
+})
+export class AppModule {}
 ```
 
-2. Authenticate your NestJS application with AWeber (#Oauth2)
-3. Integrate your NestJS application with the relevant modules (e.g. endpoints) required
+### Advanced Configuration
+
+For applications with custom environment file paths or caching strategies:
+
+```typescript
+import { AWeberModule } from '@juicyllama/nestjs-aweber'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+
+@Module({
+  imports: [
+    AWeberModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        configModule: {
+          isGlobal: true,
+          envFilePath: `apps/core/.env.${process.env.NODE_ENV || 'local'}`,
+        },
+        cacheModule: {
+          isGlobal: true,
+          // Custom cache configuration here
+        },
+      }),
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+See [USAGE.md](./USAGE.md) for more detailed configuration examples.
+
+3. Authenticate your NestJS app with Aweber (OAuth2)
+
+4. Use the AWeber services in your application
 
 You can checkout the [Sandbox](./src/sandbox/) for an example implementation.
 

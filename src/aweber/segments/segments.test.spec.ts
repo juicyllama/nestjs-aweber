@@ -16,7 +16,7 @@ describe('SegmentsService', () => {
 
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
-			imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, SegmentsModule],
+			imports: [AWeberModule.forRoot(), AuthModule, SegmentsModule],
 		}).compile()
 
 		app = moduleRef.createNestApplication()

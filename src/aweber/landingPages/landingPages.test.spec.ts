@@ -13,7 +13,7 @@ describe('LandingPagesService', () => {
 
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
-			imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, LandingPagesModule],
+			imports: [AWeberModule.forRoot(), AuthModule, LandingPagesModule],
 		}).compile()
 
 		app = moduleRef.createNestApplication()

@@ -12,7 +12,7 @@ describe('Integrations', () => {
 
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
-			imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, IntegrationsModule],
+			imports: [AWeberModule.forRoot(), AuthModule, IntegrationsModule],
 		}).compile()
 
 		app = moduleRef.createNestApplication()

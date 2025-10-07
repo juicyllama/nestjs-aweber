@@ -7,7 +7,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
 @Module({
-	imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, AccountsModule],
+	imports: [AWeberModule.forRoot(), AuthModule, AccountsModule],
 	controllers: [SandboxController],
 	providers: [SandboxService],
 	exports: [SandboxService],

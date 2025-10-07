@@ -18,7 +18,7 @@ describe('Subscribers', () => {
 
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
-			imports: [ConfigModule.forRoot(), AWeberModule, AuthModule, SubscribersModule],
+			imports: [AWeberModule.forRoot(), AuthModule, SubscribersModule],
 		}).compile()
 
 		app = moduleRef.createNestApplication()
