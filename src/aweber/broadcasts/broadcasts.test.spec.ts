@@ -4,7 +4,6 @@ import { AWeberCreateBroadcastDto, AWeberUpdateBroadcastDto, AWeberScheduleBroad
 import { BroadcastsModule } from './broadcasts.module'
 import { BroadcastsService } from './broadcasts.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 describe('Broadcasts', () => {

@@ -4,7 +4,6 @@ import { landingPageMock } from './landingPages.mocks'
 import { LandingPagesModule } from './landingPages.module'
 import { LandingPagesService } from './landingPages.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 describe('LandingPagesService', () => {

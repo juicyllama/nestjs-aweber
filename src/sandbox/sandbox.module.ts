@@ -4,7 +4,6 @@ import { AWeberModule } from '../index'
 import { SandboxController } from './sandbox.controller'
 import { SandboxService } from './sandbox.service'
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 
 @Module({
 	imports: [AWeberModule.forRoot(), AuthModule, AccountsModule],

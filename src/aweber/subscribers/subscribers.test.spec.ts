@@ -9,7 +9,6 @@ import {
 import { SubscribersModule } from './subscribers.module'
 import { SubscribersService } from './subscribers.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 describe('Subscribers', () => {

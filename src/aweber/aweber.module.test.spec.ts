@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { AWeberModule } from './aweber.module'
 import { AuthService } from './auth/auth.service'
+import { AWeberModule } from './aweber.module'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { Test, TestingModule } from '@nestjs/testing'
 
 describe('AWeberModule Configuration', () => {
 	it('should create module with forRoot() default options', async () => {
@@ -42,7 +42,7 @@ describe('AWeberModule Configuration', () => {
 				AWeberModule.forRootAsync({
 					imports: [ConfigModule],
 					inject: [ConfigService],
-					useFactory: async (configService: ConfigService) => ({
+					useFactory: async () => ({
 						configModule: {
 							isGlobal: true,
 						},

@@ -4,7 +4,6 @@ import { webformMock, webformSplitTestMock, webformSplitTestComponentMock } from
 import { WebformsModule } from './webforms.module'
 import { WebformsService } from './webforms.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 describe('WebformsService', () => {

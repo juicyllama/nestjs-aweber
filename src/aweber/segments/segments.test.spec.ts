@@ -4,7 +4,6 @@ import { segmentMock, segmentsMock } from './segments.mocks'
 import { SegmentsModule } from './segments.module'
 import { SegmentsService } from './segments.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 // Mock the environment variable to be 'test'

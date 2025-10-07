@@ -4,7 +4,6 @@ import { listMock, listTagsMock } from './lists.mocks'
 import { ListsModule } from './lists.module'
 import { ListsService } from './lists.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 describe('ListsService', () => {

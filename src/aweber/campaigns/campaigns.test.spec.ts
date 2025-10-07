@@ -4,7 +4,6 @@ import { AWeberFindCampaignsQuery } from './campaigns.dto'
 import { CampaignsModule } from './campaigns.module'
 import { CampaignsService } from './campaigns.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 describe('Campaigns', () => {

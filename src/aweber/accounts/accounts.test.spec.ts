@@ -3,7 +3,6 @@ import { AWeberModule } from '../aweber.module'
 import { AccountsModule } from './accounts.module'
 import { AccountsService } from './accounts.service'
 import { INestApplication } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 
 describe('Accounts', () => {

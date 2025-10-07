@@ -47,18 +47,22 @@ export class AWeberModule {
 		if (options.configModule) {
 			imports.push(ConfigModule.forRoot(options.configModule))
 		} else {
-			imports.push(ConfigModule.forRoot({
-				isGlobal: true,
-			}))
+			imports.push(
+				ConfigModule.forRoot({
+					isGlobal: true,
+				}),
+			)
 		}
 
 		// Add CacheModule if cacheModule options are provided, otherwise use default
 		if (options.cacheModule) {
 			imports.push(CacheModule.register(options.cacheModule))
 		} else {
-			imports.push(CacheModule.register({
-				isGlobal: true,
-			}))
+			imports.push(
+				CacheModule.register({
+					isGlobal: true,
+				}),
+			)
 		}
 
 		// Add config validation
@@ -96,18 +100,22 @@ export class AWeberModule {
 		if (options.configModule) {
 			imports.push(ConfigModule.forRoot(options.configModule))
 		} else {
-			imports.push(ConfigModule.forRoot({
-				isGlobal: true,
-			}))
+			imports.push(
+				ConfigModule.forRoot({
+					isGlobal: true,
+				}),
+			)
 		}
 
 		// Add CacheModule if cacheModule options are provided, otherwise use default
 		if (options.cacheModule) {
 			imports.push(CacheModule.register(options.cacheModule))
 		} else {
-			imports.push(CacheModule.register({
-				isGlobal: true,
-			}))
+			imports.push(
+				CacheModule.register({
+					isGlobal: true,
+				}),
+			)
 		}
 
 		// Add config validation
