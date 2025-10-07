@@ -1,6 +1,6 @@
 {
     "name": "@juicyllama/nestjs-aweber",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "description": "A NestJS app for integrating with AWeber API",
     "publishConfig": {
         "access": "public",
