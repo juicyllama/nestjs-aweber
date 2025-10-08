@@ -165,7 +165,17 @@ export class SubscribersService {
 			body: formData,
 		})
 
-		return await safeJsonParse<AWeberSubscriber>(response, 'Create Subscriber API Call')
+		if (!response.ok) {
+			const errorText = await response.text()
+			throw new Error(`Create Subscriber API Call failed: ${response.status} - ${errorText}`)
+		}
+
+		return await this.findSubscribersForList(accountId, listId, { email: data.email }).then(subs => {
+			if (subs.length === 0) {
+				throw new Error('Subscriber creation confirmed but unable to retrieve the new subscriber.')
+			}
+			return subs[0]
+		})
 	}
 
 	/**
