@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import {
 	AWeberGetSubscribersDto,
 	AWeberCreateSubscriberDto,
@@ -57,12 +58,7 @@ export class SubscribersService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Subscribers API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberSubscriber[] }
+		const responseData = await safeJsonParse<{ entries: AWeberSubscriber[] }>(response, 'Get Subscribers API Call')
 		return responseData.entries || []
 	}
 
@@ -95,13 +91,7 @@ export class SubscribersService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Subscribers Total API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as AWeberSubscriberTotal
-		return responseData
+		return await safeJsonParse<AWeberSubscriberTotal>(response, 'Get Subscribers Total API Call')
 	}
 
 	/**
@@ -124,12 +114,7 @@ export class SubscribersService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Subscriber API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberSubscriber
+		return await safeJsonParse<AWeberSubscriber>(response, 'Get Subscriber API Call')
 	}
 
 	/**
@@ -162,8 +147,12 @@ export class SubscribersService {
 		}
 		if (data.ip_address) formData.append('ip_address', data.ip_address)
 		if (data.misc_notes) formData.append('misc_notes', data.misc_notes)
-		if (data.strict_custom_fields) formData.append('strict_custom_fields', data.strict_custom_fields)
-		if (data.update_existing) formData.append('update_existing', data.update_existing)
+		if (data.strict_custom_fields !== undefined) {
+			formData.append('strict_custom_fields', String(data.strict_custom_fields))
+		}
+		if (data.update_existing !== undefined) {
+			formData.append('update_existing', String(data.update_existing))
+		}
 
 		const url = `${AWEBER_API_BASE_URL}/accounts/${accountId}/lists/${listId}/subscribers`
 
@@ -176,12 +165,7 @@ export class SubscribersService {
 			body: formData,
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Create Subscriber API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberSubscriber
+		return await safeJsonParse<AWeberSubscriber>(response, 'Create Subscriber API Call')
 	}
 
 	/**
@@ -226,12 +210,7 @@ export class SubscribersService {
 			body: formData,
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Update Subscriber API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberSubscriber
+		return await safeJsonParse<AWeberSubscriber>(response, 'Update Subscriber API Call')
 	}
 
 	/**
@@ -287,12 +266,10 @@ export class SubscribersService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Subscriber Activity API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberSubscriberActivity[] }
+		const responseData = await safeJsonParse<{ entries: AWeberSubscriberActivity[] }>(
+			response,
+			'Get Subscriber Activity API Call',
+		)
 		return responseData.entries || []
 	}
 
@@ -329,12 +306,7 @@ export class SubscribersService {
 			body: formData,
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Move Subscriber API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberMoveSubscriberResponse
+		return await safeJsonParse<AWeberMoveSubscriberResponse>(response, 'Move Subscriber API Call')
 	}
 
 	/**
@@ -371,12 +343,7 @@ export class SubscribersService {
 			body: formData,
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Create Purchase API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberCreatePurchaseResponse
+		return await safeJsonParse<AWeberCreatePurchaseResponse>(response, 'Create Purchase API Call')
 	}
 
 	/**
@@ -411,7 +378,9 @@ export class SubscribersService {
 		if (data.misc_notes) formData.append('misc_notes', data.misc_notes)
 		if (data.email) formData.append('email', data.email)
 		if (data.status) formData.append('status', data.status)
-		if (data.strict_custom_fields) formData.append('strict_custom_fields', data.strict_custom_fields)
+		if (data.strict_custom_fields !== undefined) {
+			formData.append('strict_custom_fields', String(data.strict_custom_fields))
+		}
 		if (data.last_followup_message_number_sent !== undefined) {
 			formData.append('last_followup_message_number_sent', data.last_followup_message_number_sent.toString())
 		}
@@ -427,12 +396,7 @@ export class SubscribersService {
 			body: formData,
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Update Subscriber By Email API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberSubscriber
+		return await safeJsonParse<AWeberSubscriber>(response, 'Update Subscriber By Email API Call')
 	}
 
 	/**
@@ -493,12 +457,10 @@ export class SubscribersService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Find Subscribers For List API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberSubscriber[] }
+		const responseData = await safeJsonParse<{ entries: AWeberSubscriber[] }>(
+			response,
+			'Find Subscribers For List API Call',
+		)
 		return responseData.entries || []
 	}
 
@@ -531,12 +493,10 @@ export class SubscribersService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Find Subscribers For Account API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberSubscriber[] }
+		const responseData = await safeJsonParse<{ entries: AWeberSubscriber[] }>(
+			response,
+			'Find Subscribers For Account API Call',
+		)
 		return responseData.entries || []
 	}
 }

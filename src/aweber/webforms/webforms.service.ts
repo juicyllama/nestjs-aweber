@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import {
 	AWeberWebformsForAccountQuery,
 	AWeberWebformSplitTestsForAccountQuery,
@@ -38,12 +39,7 @@ export class WebformsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webforms For Account API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberWebform[] }
+		const responseData = await safeJsonParse<{ entries: AWeberWebform[] }>(response, 'API Call')
 		return responseData.entries || []
 	}
 
@@ -73,12 +69,7 @@ export class WebformsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webform Split Tests For Account API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberWebformSplitTest[] }
+		const responseData = await safeJsonParse<{ entries: AWeberWebformSplitTest[] }>(response, 'API Call')
 		return responseData.entries || []
 	}
 
@@ -109,12 +100,7 @@ export class WebformsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webforms For List API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberWebform[] }
+		const responseData = await safeJsonParse<{ entries: AWeberWebform[] }>(response, 'API Call')
 		return responseData.entries || []
 	}
 
@@ -139,12 +125,7 @@ export class WebformsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webform For List API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberWebform
+		return await safeJsonParse<AWeberWebform>(response, 'API Call')
 	}
 
 	/**
@@ -174,12 +155,7 @@ export class WebformsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webform Split Tests For List API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberWebformSplitTest[] }
+		const responseData = await safeJsonParse<{ entries: AWeberWebformSplitTest[] }>(response, 'API Call')
 		return responseData.entries || []
 	}
 
@@ -208,12 +184,7 @@ export class WebformsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webform Split Test For List API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberWebformSplitTest
+		return await safeJsonParse<AWeberWebformSplitTest>(response, 'API Call')
 	}
 
 	/**
@@ -244,12 +215,7 @@ export class WebformsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webform Split Test Components API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberWebformSplitTestComponent[] }
+		const responseData = await safeJsonParse<{ entries: AWeberWebformSplitTestComponent[] }>(response, 'API Call')
 		return responseData.entries || []
 	}
 
@@ -279,11 +245,6 @@ export class WebformsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Webform Split Test Component API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberWebformSplitTestComponent
+		return await safeJsonParse<AWeberWebformSplitTestComponent>(response, 'API Call')
 	}
 }

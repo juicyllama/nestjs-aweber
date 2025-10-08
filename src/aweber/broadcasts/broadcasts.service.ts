@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import {
 	AWeberBroadcastQuery,
 	AWeberBroadcastTotalQuery,
@@ -54,12 +55,7 @@ export class BroadcastsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Broadcasts API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberBroadcast[] }
+		const responseData = await safeJsonParse<{ entries: AWeberBroadcast[] }>(response, 'Get Broadcasts API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -92,12 +88,7 @@ export class BroadcastsService {
 			body: formData.toString(),
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Create Broadcast API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberBroadcast
+		return await safeJsonParse<AWeberBroadcast>(response, 'API Call')
 	}
 
 	/**
@@ -121,12 +112,7 @@ export class BroadcastsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Broadcast API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberBroadcast
+		return await safeJsonParse<AWeberBroadcast>(response, 'API Call')
 	}
 
 	/**
@@ -166,12 +152,7 @@ export class BroadcastsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Update Broadcast API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberBroadcast
+		return await safeJsonParse<AWeberBroadcast>(response, 'API Call')
 	}
 
 	/**
@@ -231,12 +212,7 @@ export class BroadcastsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Schedule Broadcast API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberBroadcastScheduleResponse
+		return await safeJsonParse<AWeberBroadcastScheduleResponse>(response, 'API Call')
 	}
 
 	/**
@@ -264,12 +240,7 @@ export class BroadcastsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Cancel Broadcast API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberBroadcastCancelResponse
+		return await safeJsonParse<AWeberBroadcastCancelResponse>(response, 'API Call')
 	}
 
 	/**
@@ -299,12 +270,7 @@ export class BroadcastsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Total Broadcasts API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberBroadcastTotal
+		return await safeJsonParse<AWeberBroadcastTotal>(response, 'API Call')
 	}
 
 	/**
@@ -335,12 +301,7 @@ export class BroadcastsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Broadcast Opens API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberBroadcastOpen[] }
+		const responseData = await safeJsonParse<{ entries: AWeberBroadcastOpen[] }>(response, 'API Call')
 		return responseData.entries || []
 	}
 
@@ -372,12 +333,7 @@ export class BroadcastsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Broadcast Clicks API Call failed: ${response.status} - ${errorText} `)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberBroadcastClick[] }
+		const responseData = await safeJsonParse<{ entries: AWeberBroadcastClick[] }>(response, 'API Call')
 		return responseData.entries || []
 	}
 }

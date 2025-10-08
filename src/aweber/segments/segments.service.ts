@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWeberSegmentsQuery } from './segments.dto'
 import { segmentMock, segmentsMock } from './segments.mocks'
 import { AWeberSegment } from './segments.types'
@@ -32,12 +33,7 @@ export class SegmentsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Segments API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberSegment[] }
+		const responseData = await safeJsonParse<{ entries: AWeberSegment[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -62,11 +58,6 @@ export class SegmentsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Segment API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberSegment
+		return await safeJsonParse<AWeberSegment>(response, 'API Call')
 	}
 }

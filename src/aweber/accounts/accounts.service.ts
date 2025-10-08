@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWeberAccountQuery } from './accounts.dto'
 import { accountMock } from './accounts.mocks'
 import { AWeberAccount } from './accounts.types'
@@ -30,12 +31,7 @@ export class AccountsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Accounts API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberAccount[] }
+		const responseData = await safeJsonParse<{ entries: AWeberAccount[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -55,11 +51,6 @@ export class AccountsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Account #${accountId} API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberAccount
+		return await safeJsonParse<AWeberAccount>(response, 'API Call')
 	}
 }

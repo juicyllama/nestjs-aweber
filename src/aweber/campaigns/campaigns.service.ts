@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWeberCampaignQuery, AWeberFindCampaignsQuery, AWeberCampaignStatsQuery } from './campaigns.dto'
 import { campaignMock, campaignStatisticMock } from './campaigns.mocks'
 import { AWeberCampaign, AWeberCampaignStatistic, AWeberCampaignType, AWeberCampaignStatsId } from './campaigns.types'
@@ -32,12 +33,7 @@ export class CampaignsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Campaigns API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberCampaign[] }
+		const responseData = await safeJsonParse<{ entries: AWeberCampaign[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -67,12 +63,7 @@ export class CampaignsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Campaign API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberCampaign
+		return await safeJsonParse<AWeberCampaign>(response, 'API Call')
 	}
 
 	/**
@@ -103,12 +94,7 @@ export class CampaignsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Find Campaigns API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberCampaign[] }
+		const responseData = await safeJsonParse<{ entries: AWeberCampaign[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -140,12 +126,7 @@ export class CampaignsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Broadcast Statistics API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberCampaignStatistic[] }
+		const responseData = await safeJsonParse<{ entries: AWeberCampaignStatistic[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -175,11 +156,6 @@ export class CampaignsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Broadcast Statistic API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberCampaignStatistic
+		return await safeJsonParse<AWeberCampaignStatistic>(response, 'API Call')
 	}
 }

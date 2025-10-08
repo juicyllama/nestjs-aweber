@@ -1,6 +1,7 @@
 import { LocalCacheService } from '../../config/cache/local.cache.service'
 import { AWeberConfigDto } from '../../config/config.dto'
 import { InjectConfig } from '../../config/config.provider'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWEBER_OAUTH_URL, AWEBER_TOKEN_URL, OAUTH_CACHE_KEY } from './auth.constants'
 import { AWeberOAuthInterface } from './auth.interface'
 import { Injectable } from '@nestjs/common'
@@ -116,13 +117,7 @@ export class AuthService {
 			body: new URLSearchParams(params).toString(),
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Token request failed: ${response.status} -  ${errorText}`)
-		}
-
-		const tokenResponse = (await response.json()) as TokenResponse
-		return tokenResponse
+		return await safeJsonParse<TokenResponse>(response, 'Token request')
 	}
 
 	/**

@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWeberCustomFieldQuery, AWeberCreateCustomFieldDto, AWeberUpdateCustomFieldDto } from './customFields.dto'
 import { customFieldMock } from './customFields.mocks'
 import { AWeberCustomField } from './customFields.types'
@@ -36,12 +37,7 @@ export class CustomFieldsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Custom Fields API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberCustomField[] }
+		const responseData = await safeJsonParse<{ entries: AWeberCustomField[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -68,12 +64,7 @@ export class CustomFieldsService {
 			body: JSON.stringify(data),
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Create Custom Field API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberCustomField
+		return await safeJsonParse<AWeberCustomField>(response, 'API Call')
 	}
 
 	/**
@@ -97,12 +88,7 @@ export class CustomFieldsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Custom Field API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberCustomField
+		return await safeJsonParse<AWeberCustomField>(response, 'API Call')
 	}
 
 	/**
@@ -132,12 +118,7 @@ export class CustomFieldsService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Update Custom Field API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberCustomField
+		return await safeJsonParse<AWeberCustomField>(response, 'API Call')
 	}
 
 	/**

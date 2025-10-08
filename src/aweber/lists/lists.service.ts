@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWeberListQuery, AWeberFindListQuery } from './lists.dto'
 import { listMock, listTagsMock } from './lists.mocks'
 import { AWeberList, AWeberListTags } from './lists.types'
@@ -32,12 +33,7 @@ export class ListsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Failed to get lists: ${response.status} ${response.statusText} - ${errorText}`)
-		}
-
-		const data = (await response.json()) as { entries?: AWeberList[] }
+		const data = await safeJsonParse<{ entries?: AWeberList[] }>(response, 'API Call')
 		return data.entries || []
 	}
 
@@ -61,12 +57,7 @@ export class ListsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Failed to get list: ${response.status} ${response.statusText} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberList
+		return await safeJsonParse<AWeberList>(response, 'API Call')
 	}
 
 	/**
@@ -91,12 +82,7 @@ export class ListsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Failed to find lists: ${response.status} ${response.statusText} - ${errorText}`)
-		}
-
-		const data = (await response.json()) as { entries?: AWeberList[] }
+		const data = await safeJsonParse<{ entries?: AWeberList[] }>(response, 'API Call')
 		return data.entries || []
 	}
 
@@ -120,11 +106,6 @@ export class ListsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Failed to get list tags: ${response.status} ${response.statusText} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberListTags
+		return await safeJsonParse<AWeberListTags>(response, 'API Call')
 	}
 }

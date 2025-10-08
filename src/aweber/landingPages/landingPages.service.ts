@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWeberLandingPageQuery } from './landingPages.dto'
 import { landingPageMock } from './landingPages.mocks'
 import { AWeberLandingPage } from './landingPages.types'
@@ -36,12 +37,7 @@ export class LandingPagesService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Landing Pages API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberLandingPage[] }
+		const responseData = await safeJsonParse<{ entries: AWeberLandingPage[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -66,11 +62,6 @@ export class LandingPagesService {
 			},
 		)
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Get Landing Page API Call failed: ${response.status} - ${errorText}`)
-		}
-
-		return (await response.json()) as AWeberLandingPage
+		return await safeJsonParse<AWeberLandingPage>(response, 'API Call')
 	}
 }

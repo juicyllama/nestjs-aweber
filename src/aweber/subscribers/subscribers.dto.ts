@@ -91,12 +91,10 @@ export class AWeberCreateSubscriberDto {
 	misc_notes?: string
 
 	@IsOptional()
-	@IsString()
-	strict_custom_fields?: string
+	strict_custom_fields?: string | boolean
 
 	@IsOptional()
-	@IsString()
-	update_existing?: string
+	update_existing?: string | boolean
 }
 
 export class AWeberUpdateSubscriberDto {
@@ -207,8 +205,7 @@ export class AWeberUpdateSubscriberByEmailDto {
 	status?: 'subscribed' | 'unsubscribed'
 
 	@IsOptional()
-	@IsString()
-	strict_custom_fields?: string
+	strict_custom_fields?: string | boolean
 
 	@IsOptional()
 	@IsNumber()

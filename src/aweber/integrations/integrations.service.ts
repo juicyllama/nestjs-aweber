@@ -1,5 +1,6 @@
 import { AWEBER_API_BASE_URL } from '../auth/auth.constants'
 import { AuthService } from '../auth/auth.service'
+import { safeJsonParse } from '../utils/response.utils'
 import { AWeberIntegrationsQuery } from './integrations.dto'
 import { integrationMock } from './integrations.mocks'
 import { AWeberIntegration } from './integrations.types'
@@ -32,12 +33,7 @@ export class IntegrationsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Failed to get integrations: ${response.status} ${response.statusText} - ${errorText}`)
-		}
-
-		const responseData = (await response.json()) as { entries: AWeberIntegration[] }
+		const responseData = await safeJsonParse<{ entries: AWeberIntegration[] }>(response, 'API Call')
 		return responseData.entries || [] // Ensure we return an array, even if empty
 	}
 
@@ -61,12 +57,7 @@ export class IntegrationsService {
 			},
 		})
 
-		if (!response.ok) {
-			const errorText = await response.text()
-			throw new Error(`Failed to get integration: ${response.status} ${response.statusText} - ${errorText}`)
-		}
-
-		const data = (await response.json()) as AWeberIntegration
+		const data = await safeJsonParse<AWeberIntegration>(response, 'API Call')
 		return data
 	}
 }
