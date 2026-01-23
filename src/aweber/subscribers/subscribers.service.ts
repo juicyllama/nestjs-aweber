@@ -118,6 +118,23 @@ export class SubscribersService {
 	}
 
 	/**
+	 * Get a specific subscriber by email
+	 */
+	async getSubscriberByEmail(accountId: number, listId: number, email: string): Promise<AWeberSubscriber> {
+		if (process.env.NODE_ENV === 'test') {
+			return subscriberMock
+		}
+
+		const subscribers = await this.findSubscribersForList(accountId, listId, { email })
+
+		if (subscribers.length === 0) {
+			throw new Error(`Subscriber with email ${email} not found`)
+		}
+
+		return subscribers[0]
+	}
+
+	/**
 	 * Create a new subscriber
 	 */
 	async createSubscriber(

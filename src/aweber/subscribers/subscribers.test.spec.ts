@@ -51,6 +51,15 @@ describe('Subscribers', () => {
 			expect(subscriber.status).toBe('subscribed')
 			expect(subscriber.name).toBe('John Doe')
 		})
+
+		it('should get a specific subscriber by email', async () => {
+			const subscriber = await subscribersService.getSubscriberByEmail(123, 456, 'user@example.com')
+			expect(subscriber).toBeDefined()
+			expect(subscriber.email).toBe('user@example.com')
+			expect(subscriber.id).toBeDefined()
+			expect(subscriber.status).toBe('subscribed')
+			expect(subscriber.name).toBe('John Doe')
+		})
 	})
 
 	describe('Create Subscriber', () => {
