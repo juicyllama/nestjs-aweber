@@ -25,7 +25,7 @@ import {
 	AWeberMoveSubscriberResponse,
 	AWeberCreatePurchaseResponse,
 } from './subscribers.types'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 @Injectable()
 export class SubscribersService {
@@ -118,6 +118,19 @@ export class SubscribersService {
 	}
 
 	/**
+	 * Get a specific subscriber by email
+	 */
+	async getSubscriberByEmail(accountId: number, listId: number, email: string): Promise<AWeberSubscriber> {
+		const subscribers = await this.findSubscribersForList(accountId, listId, { email })
+
+		if (subscribers.length === 0) {
+			throw new NotFoundException(`Subscriber with email ${email} not found`)
+		}
+
+		return subscribers[0]
+	}
+
+	/**
 	 * Create a new subscriber
 	 */
 	async createSubscriber(
@@ -191,7 +204,7 @@ export class SubscribersService {
 			return {
 				...subscriberMock,
 				...data,
-				tags: Array.isArray(data.tags) ? data.tags : subscriberMock.tags,
+				tags: subscriberMock.tags,
 			}
 		}
 
@@ -203,7 +216,7 @@ export class SubscribersService {
 		if (data.custom_fields) {
 			formData.append('custom_fields', JSON.stringify(data.custom_fields))
 		}
-		if (data.tags && data.tags.length > 0) {
+		if (data.tags) {
 			formData.append('tags', JSON.stringify(data.tags))
 		}
 		if (data.ad_tracking) formData.append('ad_tracking', data.ad_tracking)

@@ -107,9 +107,8 @@ export class AWeberUpdateSubscriberDto {
 	custom_fields?: Record<string, string | null>
 
 	@IsOptional()
-	@IsArray()
-	@IsString({ each: true })
-	tags?: string[]
+	@IsObject()
+	tags?: { add?: string[]; remove?: string[] }
 
 	@IsOptional()
 	@IsString()

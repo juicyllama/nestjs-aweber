@@ -51,6 +51,23 @@ describe('Subscribers', () => {
 			expect(subscriber.status).toBe('subscribed')
 			expect(subscriber.name).toBe('John Doe')
 		})
+
+		it('should get a specific subscriber by email', async () => {
+			const subscriber = await subscribersService.getSubscriberByEmail(123, 456, 'user@example.com')
+			expect(subscriber).toBeDefined()
+			expect(subscriber.email).toBe('user@example.com')
+			expect(subscriber.id).toBeDefined()
+			expect(subscriber.status).toBe('subscribed')
+			expect(subscriber.name).toBe('John Doe')
+		})
+
+		it('should throw NotFoundException when subscriber email is not found', async () => {
+			jest.spyOn(subscribersService, 'findSubscribersForList').mockResolvedValueOnce([])
+
+			await expect(subscribersService.getSubscriberByEmail(123, 456, 'nonexistent@example.com')).rejects.toThrow(
+				'Subscriber with email nonexistent@example.com not found',
+			)
+		})
 	})
 
 	describe('Create Subscriber', () => {
@@ -74,7 +91,7 @@ describe('Subscribers', () => {
 			const updateData: AWeberUpdateSubscriberDto = {
 				name: 'Updated Name',
 				custom_fields: { apple: 'granny_smith' },
-				tags: ['updated'],
+				tags: { add: ['updated'] },
 			}
 
 			const subscriber = await subscribersService.updateSubscriberById(123, 456, 789, updateData)
