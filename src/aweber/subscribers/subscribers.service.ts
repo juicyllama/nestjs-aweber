@@ -208,7 +208,7 @@ export class SubscribersService {
 			return {
 				...subscriberMock,
 				...data,
-				tags: Array.isArray(data.tags) ? data.tags : subscriberMock.tags,
+				tags: subscriberMock.tags,
 			}
 		}
 
@@ -220,7 +220,7 @@ export class SubscribersService {
 		if (data.custom_fields) {
 			formData.append('custom_fields', JSON.stringify(data.custom_fields))
 		}
-		if (data.tags && data.tags.length > 0) {
+		if (data.tags) {
 			formData.append('tags', JSON.stringify(data.tags))
 		}
 		if (data.ad_tracking) formData.append('ad_tracking', data.ad_tracking)

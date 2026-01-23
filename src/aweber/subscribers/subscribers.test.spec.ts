@@ -83,7 +83,7 @@ describe('Subscribers', () => {
 			const updateData: AWeberUpdateSubscriberDto = {
 				name: 'Updated Name',
 				custom_fields: { apple: 'granny_smith' },
-				tags: ['updated'],
+				tags: { add: ['updated'] },
 			}
 
 			const subscriber = await subscribersService.updateSubscriberById(123, 456, 789, updateData)
