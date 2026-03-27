@@ -129,6 +129,67 @@ describe('Subscribers', () => {
 		})
 	})
 
+	describe('Move Subscriber Response Parsing', () => {
+		const originalNodeEnv = process.env.NODE_ENV
+		const moveData: AWeberMoveSubscriberDto = {
+			list_id: 789,
+			last_followup_message_number_sent: '0',
+		}
+
+		beforeEach(() => {
+			process.env.NODE_ENV = 'development'
+			jest.spyOn(subscribersService['authService'], 'accessToken').mockResolvedValue('fake-token')
+		})
+
+		afterEach(() => {
+			process.env.NODE_ENV = originalNodeEnv
+			jest.restoreAllMocks()
+		})
+
+		it('should return null when response is 200 with empty body', async () => {
+			jest.spyOn(global, 'fetch').mockResolvedValue({
+				ok: true,
+				text: () => Promise.resolve(''),
+			} as Response)
+
+			const result = await subscribersService.moveSubscriber(123, 456, 789, moveData)
+			expect(result).toBeNull()
+		})
+
+		it('should return parsed subscriber when response is 200 with valid JSON', async () => {
+			const subscriberPayload = {
+				id: 790,
+				email: 'user@example.com',
+				is_verified: true,
+				resource_type_link: 'https://api.aweber.com/1.0/#subscriber',
+				self_link: 'https://api.aweber.com/1.0/accounts/123/lists/789/subscribers/790',
+				status: 'subscribed',
+				subscribed_at: '2025-01-01T00:00:00-05:00',
+				subscription_method: 'api',
+				tags: ['test'],
+			}
+
+			jest.spyOn(global, 'fetch').mockResolvedValue({
+				ok: true,
+				text: () => Promise.resolve(JSON.stringify(subscriberPayload)),
+			} as Response)
+
+			const result = await subscribersService.moveSubscriber(123, 456, 789, moveData)
+			expect(result).toEqual(subscriberPayload)
+		})
+
+		it('should throw when response is 200 with invalid JSON', async () => {
+			jest.spyOn(global, 'fetch').mockResolvedValue({
+				ok: true,
+				text: () => Promise.resolve('not valid json{{{'),
+			} as Response)
+
+			await expect(subscribersService.moveSubscriber(123, 456, 789, moveData)).rejects.toThrow(
+				'Move Subscriber API Call returned invalid JSON',
+			)
+		})
+	})
+
 	describe('Create Purchase', () => {
 		it('should create a purchase event for a subscriber', async () => {
 			const purchaseData: AWeberCreatePurchaseDto = {
