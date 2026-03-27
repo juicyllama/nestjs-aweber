@@ -53,12 +53,8 @@ export const createSubscriberMock: AWeberSubscriber = {
 	self_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/790',
 }
 
-// AWeber assigns a new subscriber ID on the destination list, hence id differs from the source
-export const moveSubscriberMock: AWeberSubscriber = {
-	...subscriberMock,
-	id: 790,
-	self_link: 'https://api.aweber.com/1.0/accounts/123/lists/789/subscribers/790',
-}
+// AWeber returns 200 with an empty body on a successful move, so null is the realistic mock
+export const moveSubscriberMock: AWeberSubscriber | null = null
 
 export const createPurchaseMock = {
 	message: 'Purchase event created successfully',
