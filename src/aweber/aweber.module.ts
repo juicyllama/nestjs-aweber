@@ -77,7 +77,7 @@ export class AWeberModule {
 				provide: token,
 				useFactory: async (): Promise<AWeberConfigDto> => {
 					const inst = plainToInstance(AWeberConfigDto, options.config)
-					const errors: ValidationError[] = await validate(inst)
+					const errors: ValidationError[] = await validate(inst as object)
 					if (errors.length) {
 						throw new Error(errors.map((e: ValidationError) => e.toString()).join('\n'))
 					}
@@ -188,7 +188,7 @@ export class AWeberModule {
 					if (moduleOptions.config) {
 						// Use provided config
 						const inst = plainToInstance(AWeberConfigDto, moduleOptions.config)
-						const errors: ValidationError[] = await validate(inst)
+						const errors: ValidationError[] = await validate(inst as object)
 						if (errors.length) {
 							throw new Error(errors.map((e: ValidationError) => e.toString()).join('\n'))
 						}
@@ -197,7 +197,7 @@ export class AWeberModule {
 						// Fallback to environment variables
 						await ConfigModule.envVariablesLoaded
 						const inst = plainToInstance(AWeberConfigDto, process.env)
-						const errors: ValidationError[] = await validate(inst)
+						const errors: ValidationError[] = await validate(inst as object)
 						if (errors.length) {
 							throw new Error(errors.map((e: ValidationError) => e.toString()).join('\n'))
 						}
