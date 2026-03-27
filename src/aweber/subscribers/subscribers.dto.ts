@@ -7,7 +7,7 @@ import {
 	AWeberUnsubscribeMethod,
 } from './subscribers.types'
 import { Type } from 'class-transformer'
-import { IsOptional, IsString, IsNumber, IsArray, IsEmail, IsIn, IsObject } from 'class-validator'
+import { IsOptional, IsString, IsNumber, IsArray, IsEmail, IsIn, IsObject, IsBoolean } from 'class-validator'
 
 export class AWeberGetSubscribersDto {
 	@IsOptional()
@@ -151,6 +151,15 @@ export class AWeberMoveSubscriberDto {
 	@IsOptional()
 	@IsString()
 	last_followup_message_number_sent?: string
+
+	/**
+	 * When true, custom fields are mapped by name rather than position,
+	 * preventing data misalignment when source and destination lists
+	 * have differently-ordered or differently-named custom fields.
+	 */
+	@IsOptional()
+	@IsBoolean()
+	enforce_custom_field_mapping?: boolean
 }
 
 export class AWeberCreatePurchaseDto {

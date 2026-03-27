@@ -118,7 +118,7 @@ describe('Subscribers', () => {
 	})
 
 	describe('Move Subscriber', () => {
-		it('should move a subscriber to another list', async () => {
+		it('should move a subscriber to another list preserving all data', async () => {
 			const moveData: AWeberMoveSubscriberDto = {
 				list_id: 789,
 				last_followup_message_number_sent: '0',
@@ -126,7 +126,13 @@ describe('Subscribers', () => {
 
 			const result = await subscribersService.moveSubscriber(123, 456, 789, moveData)
 			expect(result).toBeDefined()
-			expect(result.self_link).toBeDefined()
+			expect(result.id).toBe(790)
+			expect(result.email).toBe('user@example.com')
+			expect(result.self_link).toContain('/lists/789/subscribers/790')
+			expect(result.custom_fields).toEqual({ apple: 'fuji', pear: 'bosc' })
+			expect(result.tags).toEqual(['slow', 'fast', 'lightspeed'])
+			expect(result.name).toBe('John Doe')
+			expect(result.status).toBe('subscribed')
 		})
 	})
 

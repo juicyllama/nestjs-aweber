@@ -62,10 +62,6 @@ export type AWeberSubscriberActivity = {
 	type: AWeberSubscriberActivityType
 }
 
-export type AWeberMoveSubscriberResponse = {
-	self_link: string
-}
-
 export type AWeberCreatePurchaseResponse = {
 	message: string
 }

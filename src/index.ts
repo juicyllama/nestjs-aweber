@@ -52,7 +52,6 @@ export {
 	AWeberSubscriber,
 	AWeberSubscriberActivity,
 	AWeberSubscriberTotal,
-	AWeberMoveSubscriberResponse,
 	AWeberCreatePurchaseResponse,
 	AWeberSubscriberStatus,
 	AWeberSubscriptionMethod,

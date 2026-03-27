@@ -53,7 +53,10 @@ export const createSubscriberMock: AWeberSubscriber = {
 	self_link: 'https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/790',
 }
 
-export const moveSubscriberMock = {
+// AWeber assigns a new subscriber ID on the destination list, hence id differs from the source
+export const moveSubscriberMock: AWeberSubscriber = {
+	...subscriberMock,
+	id: 790,
 	self_link: 'https://api.aweber.com/1.0/accounts/123/lists/789/subscribers/790',
 }
 
