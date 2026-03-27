@@ -22,7 +22,6 @@ import {
 	AWeberSubscriber,
 	AWeberSubscriberActivity,
 	AWeberSubscriberTotal,
-	AWeberMoveSubscriberResponse,
 	AWeberCreatePurchaseResponse,
 } from './subscribers.types'
 import { Injectable, NotFoundException } from '@nestjs/common'
@@ -297,39 +296,49 @@ export class SubscribersService {
 	}
 
 	/**
-	 * Move subscriber to another list
+	 * Move subscriber to another list.
+	 * Uses AWeber's ws.op=move operation which preserves name, custom_fields, tags, and other data.
+	 * @see https://api.aweber.com/#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/post
 	 */
 	async moveSubscriber(
 		accountId: number,
 		listId: number,
 		subscriberId: number,
 		data: AWeberMoveSubscriberDto,
-	): Promise<AWeberMoveSubscriberResponse> {
+	): Promise<AWeberSubscriber> {
 		if (process.env.NODE_ENV === 'test') {
 			return moveSubscriberMock
 		}
 
 		const accessToken = await this.authService.accessToken()
 
-		const formData = new URLSearchParams()
-		formData.append('list_id', data.list_id.toString())
+		const listLink = `${AWEBER_API_BASE_URL}/accounts/${accountId}/lists/${data.list_id}`
 
-		if (data.last_followup_message_number_sent) {
-			formData.append('last_followup_message_number_sent', data.last_followup_message_number_sent)
+		const body: Record<string, string> = {
+			'ws.op': 'move',
+			list_link: listLink,
 		}
 
-		const url = `${AWEBER_API_BASE_URL}/accounts/${accountId}/lists/${listId}/subscribers/${subscriberId}/move`
+		if (data.last_followup_message_number_sent) {
+			body.last_followup_message_number_sent = data.last_followup_message_number_sent
+		}
+
+		if (data.enforce_custom_field_mapping) {
+			body.enforce_custom_field_mapping = 'true'
+		}
+
+		const url = `${AWEBER_API_BASE_URL}/accounts/${accountId}/lists/${listId}/subscribers/${subscriberId}`
 
 		const response = await fetch(url, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Type': 'application/json',
 			},
-			body: formData,
+			body: JSON.stringify(body),
 		})
 
-		return await safeJsonParse<AWeberMoveSubscriberResponse>(response, 'Move Subscriber API Call')
+		return await safeJsonParse<AWeberSubscriber>(response, 'Move Subscriber API Call')
 	}
 
 	/**
