@@ -134,6 +134,36 @@ We recommend using Redis which ships out of the box, provide your redis environm
 REDIS_URI=redis://localhost:6379
 ```
 
+## Migration
+
+### v0.13.0 (Breaking Changes)
+
+**`moveSubscriber` return type changed**
+
+`SubscribersService.moveSubscriber()` now returns `Promise<AWeberSubscriber | null>` instead of `Promise<AWeberSubscriber>`.
+
+AWeber's move endpoint returns `200 OK` with an empty body on success. Previously this threw an error; now it returns `null`. Consumers must handle the nullable return:
+
+```typescript
+const result = await subscribersService.moveSubscriber(accountId, listId, subscriberId, {
+  list_id: destinationListId,
+  enforce_custom_field_mapping: true,
+})
+
+if (!result) {
+  // Normal success — subscriber moved, poll destination list if you need the new record
+  const moved = await subscribersService.getSubscriberByEmail(accountId, destinationListId, email)
+}
+```
+
+**`AWeberMoveSubscriberResponse` type removed**
+
+This type (`{ self_link: string }`) has been removed from exports. Use `AWeberSubscriber | null` instead.
+
+**`enforce_custom_field_mapping` added to `AWeberMoveSubscriberDto`**
+
+New optional boolean field. When `true`, custom fields are mapped by name rather than by position during a move, preventing data loss when source and destination lists have fields in a different order. Recommended for all move operations.
+
 ## Types
 
 We have typed each AWeber Resource type and have exported them for your use. 
