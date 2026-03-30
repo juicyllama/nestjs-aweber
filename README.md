@@ -134,9 +134,13 @@ We recommend using Redis which ships out of the box, provide your redis environm
 REDIS_URI=redis://localhost:6379
 ```
 
+## Changelog
+
+Release history and semver notes: **[CHANGELOG.md](./CHANGELOG.md)** (also published with the package on npm).
+
 ## Migration
 
-### v0.13.0 (Breaking Changes)
+### v1.0.0 (Breaking Changes)
 
 **`moveSubscriber` return type changed**
 
