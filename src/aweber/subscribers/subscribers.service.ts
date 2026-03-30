@@ -334,9 +334,9 @@ export class SubscribersService {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded',
 			},
-			body: JSON.stringify(body),
+			body: new URLSearchParams(body).toString(),
 		})
 
 		if (!response.ok) {
