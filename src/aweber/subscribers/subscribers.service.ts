@@ -298,6 +298,7 @@ export class SubscribersService {
 	/**
 	 * Move subscriber to another list.
 	 * Uses AWeber's ws.op=move operation which preserves name, custom_fields, tags, and other data.
+	 * Returns null when AWeber responds with 200 and an empty body (the normal success case).
 	 * @see https://api.aweber.com/#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/post
 	 */
 	async moveSubscriber(
@@ -305,7 +306,7 @@ export class SubscribersService {
 		listId: number,
 		subscriberId: number,
 		data: AWeberMoveSubscriberDto,
-	): Promise<AWeberSubscriber> {
+	): Promise<AWeberSubscriber | null> {
 		if (process.env.NODE_ENV === 'test') {
 			return moveSubscriberMock
 		}
@@ -333,12 +334,26 @@ export class SubscribersService {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded',
 			},
-			body: JSON.stringify(body),
+			body: new URLSearchParams(body).toString(),
 		})
 
-		return await safeJsonParse<AWeberSubscriber>(response, 'Move Subscriber API Call')
+		if (!response.ok) {
+			const errorText = await response.text()
+			throw new Error(`Move Subscriber API Call failed: ${response.status} - ${errorText}`)
+		}
+
+		const responseText = await response.text()
+		if (!responseText.trim()) {
+			return null
+		}
+
+		try {
+			return JSON.parse(responseText) as AWeberSubscriber
+		} catch {
+			throw new Error(`Move Subscriber API Call returned invalid JSON: ${responseText}`)
+		}
 	}
 
 	/**
