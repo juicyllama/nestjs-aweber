@@ -149,14 +149,17 @@ Release history and semver notes: **[CHANGELOG.md](./CHANGELOG.md)** (also publi
 AWeber's move endpoint returns `200 OK` with an empty body on success. Previously this threw an error; now it returns `null`. Consumers must handle the nullable return:
 
 ```typescript
+const sourceSubscriber = await subscribersService.getSubscriber(accountId, listId, subscriberId)
+const subscriberEmail = sourceSubscriber.email
+
 const result = await subscribersService.moveSubscriber(accountId, listId, subscriberId, {
   list_id: destinationListId,
   enforce_custom_field_mapping: true,
 })
 
 if (!result) {
-  // Normal success — subscriber moved, poll destination list if you need the new record
-  const moved = await subscribersService.getSubscriberByEmail(accountId, destinationListId, email)
+  // Normal success — subscriber moved; fetch on destination list if you need the full record
+  const moved = await subscribersService.getSubscriberByEmail(accountId, destinationListId, subscriberEmail)
 }
 ```
 
@@ -166,7 +169,7 @@ This type (`{ self_link: string }`) has been removed from exports. Use `AWeberSu
 
 **`enforce_custom_field_mapping` added to `AWeberMoveSubscriberDto`**
 
-New optional boolean field. When `true`, custom fields are mapped by name rather than by position during a move, preventing data loss when source and destination lists have fields in a different order. Recommended for all move operations.
+New optional boolean on `AWeberMoveSubscriberDto`. Set `enforce_custom_field_mapping` to `true` when the source and destination lists have custom fields in a different order or with different names, so AWeber maps by name and avoids misalignment; you can also enable it as a general safeguard for complex moves with many custom fields.
 
 ## Types
 

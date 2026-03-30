@@ -15,7 +15,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ### Changed
 
 - **`SubscribersService.moveSubscriber`** return type is `Promise<AWeberSubscriber | null>`. The previous public contract used `AWeberMoveSubscriberResponse` (`{ self_link }` only), then briefly `AWeberSubscriber`. Successful moves typically return `200` with an **empty body** — that case resolves to `null` instead of throwing.
-- **`moveSubscriber` HTTP request** uses `application/x-www-form-urlencoded` and `URLSearchParams` for the body, matching AWeber’s documented move operation. JSON bodies were accepted for basic moves but **`enforce_custom_field_mapping` was ignored**.
+- **`moveSubscriber` HTTP request** uses `application/x-www-form-urlencoded` and `URLSearchParams` for the body, matching AWeber’s documented move operation. Previous versions accepted JSON bodies for basic moves but **`enforce_custom_field_mapping` was ignored** on those requests.
 
 ### Removed
 
